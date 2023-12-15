@@ -1,65 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="styles.css">
-  <title>Your Website</title>
-</head>
-<body>
-
-  <header>
-    <div class="search-container">
-      <div class="search-bar">
-        <input type="text" id="searchInput" placeholder="Search...">
-        <button class="filter" onclick="performSearch()">Search</button>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+    <title>Your Website</title>
+  </head>
+  <body>
+    <header>
+      <div class="search-container">
+        <div class="search-bar">
+          <input type="text" id="searchInput" placeholder="Search..." />
+          <button class="filter" onclick="performSearch()">Search</button>
+        </div>
+        <button title="filter" class="filter" onclick="openFilterSettings()">
+          <svg viewBox="0 0 512 512" height="1em">
+            <path
+              d="M0 416c0 17.7 14.3 32 32 32l54.7 0c12.3 28.3 40.5 48 73.3 48s61-19.7 73.3-48L480 448c17.7 0 32-14.3 32-32s-14.3-32-32-32l-246.7 0c-12.3-28.3-40.5-48-73.3-48s-61 19.7-73.3 48L32 384c-17.7 0-32 14.3-32 32zm128 0a32 32 0 1 1 64 0 32 32 0 1 1 -64 0zM320 256a32 32 0 1 1 64 0 32 32 0 1 1 -64 0zm32-80c-32.8 0-61 19.7-73.3 48L32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l246.7 0c12.3 28.3 40.5 48 73.3 48s61-19.7 73.3-48l54.7 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-54.7 0c-12.3-28.3-40.5-48-73.3-48zM192 128a32 32 0 1 1 0-64 32 32 0 1 1 0 64zm73.3-64C253 35.7 224.8 16 192 16s-61 19.7-73.3 48L32 64C14.3 64 0 78.3 0 96s14.3 32 32 32l86.7 0c12.3 28.3 40.5 48 73.3 48s61-19.7 73.3-48L480 128c17.7 0 32-14.3 32-32s-14.3-32-32-32L265.3 64z"
+            ></path>
+          </svg>
+        </button>
       </div>
-      <button title="filter" class="filter" onclick="openFilterSettings()">
-  <svg viewBox="0 0 512 512" height="1em">
-    <path
-      d="M0 416c0 17.7 14.3 32 32 32l54.7 0c12.3 28.3 40.5 48 73.3 48s61-19.7 73.3-48L480 448c17.7 0 32-14.3 32-32s-14.3-32-32-32l-246.7 0c-12.3-28.3-40.5-48-73.3-48s-61 19.7-73.3 48L32 384c-17.7 0-32 14.3-32 32zm128 0a32 32 0 1 1 64 0 32 32 0 1 1 -64 0zM320 256a32 32 0 1 1 64 0 32 32 0 1 1 -64 0zm32-80c-32.8 0-61 19.7-73.3 48L32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l246.7 0c12.3 28.3 40.5 48 73.3 48s61-19.7 73.3-48l54.7 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-54.7 0c-12.3-28.3-40.5-48-73.3-48zM192 128a32 32 0 1 1 0-64 32 32 0 1 1 0 64zm73.3-64C253 35.7 224.8 16 192 16s-61 19.7-73.3 48L32 64C14.3 64 0 78.3 0 96s14.3 32 32 32l86.7 0c12.3 28.3 40.5 48 73.3 48s61-19.7 73.3-48L480 128c17.7 0 32-14.3 32-32s-14.3-32-32-32L265.3 64z"
-    ></path>
-  </svg>
-</button>
+    </header>
 
-    </div>
-  </header>
-
-  <div class="filter-modal" id="filterModal">
-    <div class="filter-content">
-      <span class="exit-btn" onclick="closeFilterSettings()">X</span>
-      <div class="filter-categories">
-        <div class="filter-category">
-          <div class="category-header" onclick="toggleCategory('category1')">
-            Category 1 <span class="dropdown-arrow">&#9660;</span>
+    <div class="filter-modal" id="filterModal">
+      <div class="filter-content">
+        <span class="exit-btn" onclick="closeFilterSettings()">X</span>
+        <div class="filter-categories">
+          <div class="filter-category">
+            <div class="category-header" onclick="toggleCategory('category1')">
+              Body Type <span class="dropdown-arrow">&#9660;</span>
+            </div>
+            <div class="category-settings" id="category1">
+              <!-- Add settings for Category 1 -->
+              <form>
+                <input type="radio" name="radioSedan" />
+                <span>sedan</span>
+                <input type="radio" name="radioSuv" />
+                <span>SUV</span>
+                <input type="radio" name="radioHatch" />
+                <span>hatchback</span>
+              </form>
+            </div>
           </div>
-          <div class="category-settings" id="category1">
-            <!-- Add settings for Category 1 -->
-            <div class="setting">Option 1.1</div>
-            <div class="setting">Option 1.2</div>
+
+          <div class="filter-category">
+            <div class="category-header" onclick="toggleCategory('category2')">
+              Price Range <span class="dropdown-arrow">&#9660;</span>
+            </div>
+            <div class="category-settings" id="category2">
+              <!-- Add settings for Category 2 -->
+              <form>
+                <input type="radio" name="radio1" />
+                <span>under 500$</span>
+                <input type="radio" name="radio2" />
+                <span>500$-800$</span>
+                <input type="radio" name="radio3" />
+                <span>above 800$</span>
+              </form>
+            </div>
           </div>
         </div>
 
-        <div class="filter-category">
-          <div class="category-header" onclick="toggleCategory('category2')">
-            Category 2 <span class="dropdown-arrow">&#9660;</span>
-          </div>
-          <div class="category-settings" id="category2">
-            <!-- Add settings for Category 2 -->
-            <div class="setting">Option 2.1</div>
-            <div class="setting">Option 2.2</div>
-          </div>
-        </div>
+        <button class="save-btn" onclick="saveFilters()">Save</button>
       </div>
-
-      <button class="save-btn" onclick="saveFilters()">Save</button>
     </div>
-  </div>
 
-  <!-- Rest of your website content goes here -->
-	<div class="cards-container" id="cardsContainer">
-    <!-- Cards will be dynamically added here using JavaScript -->
-  </div>
-  <script src="script.js"></script>
-</body>
+    <!-- Rest of your website content goes here -->
+    <div class="cards-container" id="cardsContainer">
+      <!-- Cards will be dynamically added here using JavaScript -->
+    </div>
+    <script src="script.js"></script>
+  </body>
 </html>
