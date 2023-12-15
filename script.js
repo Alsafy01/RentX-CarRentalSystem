@@ -192,3 +192,15 @@ function saveFilters() {
   renderCards(newlyFilteredCards);
   closeFilterSettings();
 }
+let originalCardsData = cardsData.slice(); // Create a copy of the original data
+
+function returnToOriginal() {
+  filteredCards = [];
+  renderCards(originalCardsData);
+  const radioButtons = document.querySelectorAll('input[type="radio"]');
+  radioButtons.forEach((button) => {
+    button.checked = false;
+  });
+  const searchInput = document.getElementById("searchInput");
+  searchInput.value = "";
+}
