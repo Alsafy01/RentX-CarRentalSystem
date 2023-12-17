@@ -127,6 +127,11 @@ function renderCards(cards) {
       </div>
     `;
 
+    const addButton = card.querySelector(".card-btn");
+    addButton.addEventListener("click", function () {
+      addToCards(cardData.name, cardData.price);
+    });
+
     cardsContainer.appendChild(card);
   });
 }
@@ -203,4 +208,10 @@ function returnToOriginal() {
   });
   const searchInput = document.getElementById("searchInput");
   searchInput.value = "";
+}
+
+function addToCards(cardName, cardPrice) {
+  window.location.href = `checkout.html?name=${encodeURIComponent(
+    cardName
+  )}&price=${encodeURIComponent(cardPrice)}`;
 }
