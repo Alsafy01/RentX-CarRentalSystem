@@ -1,0 +1,446 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+header {
+  background-color: #10172b;
+  color: white;
+  padding: 10px;
+}
+
+.search-container {
+  display: flex;
+  align-items: center;
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+}
+
+input[type="text"] {
+  padding: 8px;
+}
+
+button {
+  padding: 8px;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.filter-icon {
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.filter-icon img {
+  width: 20px;
+  height: 20px;
+}
+
+.filter-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  align-items: center;
+  justify-content: center;
+}
+
+.filter-content {
+  background: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  position: relative;
+  width: 60%;
+  max-width: 600px;
+}
+
+.exit-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+}
+
+.filter-categories {
+  margin-bottom: 20px;
+}
+
+.filter-category {
+  margin-bottom: 10px;
+}
+
+.category-header {
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+.category-header.active {
+  border-color: #3498db;
+}
+.dropdown-arrow {
+  font-size: 12px;
+}
+
+.category-settings {
+  display: none;
+  overflow: hidden;
+  margin-top: 5px;
+  transition: max-height 0.3s ease-in-out, border-color 0.3s ease-in-out;
+  max-height: 0;
+  border: 1px solid #ccc;
+}
+
+.category-settings.active {
+  display: block;
+  max-height: 200px;
+  border-color: #3498db;
+}
+
+.setting {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 5px;
+}
+
+.save-btn {
+  position: absolute;
+  bottom: 2px;
+  right: 10px;
+  padding: 8px;
+  cursor: pointer;
+}
+.categories {
+  display: flex;
+  flex-direction: column;
+}
+
+.category {
+  margin-bottom: 20px;
+}
+
+.circle-row {
+  display: flex;
+  gap: 10px;
+}
+
+.circle {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: 1px solid #ccc;
+  color: #333;
+}
+
+.circle.active {
+  background-color: #3498db;
+  color: #fff;
+}
+.filter {
+  width: 50px;
+  height: 40px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(0, 0, 0, 0.192);
+  cursor: pointer;
+  box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.021);
+  transition: all 0.3s;
+}
+
+.filter svg {
+  height: 16px;
+  fill: rgb(77, 77, 77);
+  transition: all 0.3s;
+}
+.filter:hover {
+  box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.11);
+  background-color: purple;
+  color: white;
+}
+.filter:hover svg {
+  fill: white;
+}
+.cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin: 20px;
+}
+
+.card {
+  --font-color: #323232;
+  --font-color-sub: #666;
+  --bg-color: #fff;
+  --main-color: #323232;
+  --main-focus: #2d8cf0;
+  width: 230px;
+  height: 300px;
+  background: var(--bg-color);
+  border: 2px solid var(--main-color);
+  box-shadow: 4px 4px var(--main-color);
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 20px;
+  gap: 10px;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+
+.card:last-child {
+  justify-content: flex-end;
+}
+
+.card-img {
+  transition: all 0.5s;
+  display: flex;
+  justify-content: center;
+  background-size: cover;
+  background-position: center;
+  height: 100px;
+}
+
+.card-img .img {
+  transform: scale(1);
+  position: relative;
+  box-sizing: border-box;
+  width: 100px;
+  height: 100px;
+  border-top-left-radius: 80px 50px;
+  border-top-right-radius: 80px 50px;
+  border: 2px solid black;
+  background-color: #228b22;
+  background-image: white;
+}
+
+.card-img .img::before {
+  content: "";
+  position: absolute;
+  width: 65px;
+  height: 110px;
+  margin-left: -32.5px;
+  left: 50%;
+  bottom: -4px;
+  background-repeat: no-repeat;
+  background-image: radial-gradient(
+      ellipse at center,
+      rgba(0, 0, 0, 0.7) 30%,
+      transparent 30%
+    ),
+    linear-gradient(
+      to top,
+      transparent 17px,
+      rgba(0, 0, 0, 0.3) 17px,
+      rgba(0, 0, 0, 0.3) 20px,
+      transparent 20px
+    ),
+    linear-gradient(to right, black 2px, transparent 2px),
+    linear-gradient(to left, black 2px, transparent 2px),
+    linear-gradient(to top, black 2px, #228b22 2px);
+  background-size: 60% 10%, 100% 100%, 100% 65%, 100% 65%, 100% 50%;
+  background-position: center 3px, center bottom, center bottom, center bottom,
+    center bottom;
+  border-radius: 0 0 4px 4px;
+  z-index: 2;
+}
+
+.card-img .img::after {
+  content: "";
+  position: absolute;
+  box-sizing: border-box;
+  width: 28px;
+  height: 28px;
+  margin-left: -14px;
+  left: 50%;
+  top: -13px;
+  background-repeat: no-repeat;
+  background-image: linear-gradient(80deg, #ffc0cb 45%, transparent 45%),
+    linear-gradient(-175deg, #ffc0cb 45%, transparent 45%),
+    linear-gradient(80deg, rgba(0, 0, 0, 0.2) 51%, rgba(0, 0, 0, 0) 51%),
+    linear-gradient(-175deg, rgba(0, 0, 0, 0.2) 51%, rgba(0, 0, 0, 0) 51%),
+    radial-gradient(
+      circle at center,
+      #ffa6b6 45%,
+      rgba(0, 0, 0, 0.2) 45%,
+      rgba(0, 0, 0, 0.2) 52%,
+      rgba(0, 0, 0, 0) 52%
+    ),
+    linear-gradient(
+      45deg,
+      rgba(0, 0, 0, 0) 48%,
+      rgba(0, 0, 0, 0.2) 48%,
+      rgba(0, 0, 0, 0.2) 52%,
+      rgba(0, 0, 0, 0) 52%
+    ),
+    linear-gradient(
+      65deg,
+      rgba(0, 0, 0, 0) 48%,
+      rgba(0, 0, 0, 0.2) 48%,
+      rgba(0, 0, 0, 0.2) 52%,
+      rgba(0, 0, 0, 0) 52%
+    ),
+    linear-gradient(
+      22deg,
+      rgba(0, 0, 0, 0) 48%,
+      rgba(0, 0, 0, 0.2) 48%,
+      rgba(0, 0, 0, 0.2) 54%,
+      rgba(0, 0, 0, 0) 54%
+    );
+  background-size: 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%,
+    100% 75%, 100% 95%, 100% 60%;
+  background-position: center center;
+  border-top-left-radius: 120px;
+  border-top-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 70px;
+  border-top: 2px solid black;
+  border-left: 2px solid black;
+  transform: rotate(45deg);
+  z-index: 1;
+}
+
+.card-title {
+  font-size: 20px;
+  font-weight: 500;
+  text-align: center;
+  color: var(--font-color);
+}
+
+.card-subtitle {
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--font-color-sub);
+}
+
+.card-divider {
+  width: 100%;
+  border: 1px solid var(--main-color);
+  border-radius: 50px;
+}
+
+.card-footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-price {
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--font-color);
+}
+
+.card-price span {
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--font-color-sub);
+}
+
+.card-btn {
+  height: 35px;
+  background: var(--bg-color);
+  border: 2px solid var(--main-color);
+  border-radius: 5px;
+  padding: 0 15px;
+  transition: all 0.3s;
+}
+
+.card-btn svg {
+  width: 100%;
+  height: 100%;
+  fill: var(--main-color);
+  transition: all 0.3s;
+}
+
+.card-img:hover {
+  transform: translateY(-3px);
+}
+
+.card-btn:hover {
+  border: 2px solid var(--main-focus);
+}
+
+.card-btn:hover svg {
+  fill: var(--main-focus);
+}
+
+.card-btn:active {
+  transform: translateY(3px);
+}
+.search-container li {
+  color: white;
+  font-size: 17px;
+  padding: 7px 13px;
+  border-radius: 3px;
+  text-transform: uppercase;
+  display: inline-block;
+  margin: 0 5px;
+  text-decoration: none;
+  list-style: none;
+  box-sizing: border-box;
+}
+.search-container li a {
+  color: white;
+  text-decoration: none;
+  margin-left: 1600%;
+}
+a.active,
+a:hover {
+  background: #808080;
+  transition: 0.5s;
+}
+
+.logo-text {
+  font-size: 24px; /* Adjust font size as needed */
+  font-weight: bold; /* Adjust font weight as needed */
+  text-decoration: none; /* Remove underline */
+  color: #fff; /* Set text color as needed */
+}
+
+.logo-text:hover {
+  color: purple; /* Change color on hover if desired */
+}
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo-container {
+  flex-grow: 1;
+}
+
+.logo-container img {
+  max-width: 100%;
+}
+
+.search-container {
+  display: flex;
+  align-items: center;
+}
+
+.auth-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+/* Add any additional styling as needed */
