@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Admin</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="admin.css" />
+  </head>
+
+  <body>
+    <header>
+      <div class="search-container">
+        <button
+          id="filterBtn"
+          title="filter"
+          class="filter"
+          onclick="openFilterSettings()"
+        >
+          <svg viewBox="0 0 512 512" height="1em">
+            <path
+              d="M0 416c0 17.7 14.3 32 32 32l54.7 0c12.3 28.3 40.5 48 73.3 48s61-19.7 73.3-48L480 448c17.7 0 32-14.3 32-32s-14.3-32-32-32l-246.7 0c-12.3-28.3-40.5-48-73.3-48s-61 19.7-73.3 48L32 384c-17.7 0-32 14.3-32 32zm128 0a32 32 0 1 1 64 0 32 32 0 1 1 -64 0zM320 256a32 32 0 1 1 64 0 32 32 0 1 1 -64 0zm32-80c-32.8 0-61 19.7-73.3 48L32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l246.7 0c12.3 28.3 40.5 48 73.3 48s61-19.7 73.3-48l54.7 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-54.7 0c-12.3-28.3-40.5-48-73.3-48zM192 128a32 32 0 1 1 0-64 32 32 0 1 1 0 64zm73.3-64C253 35.7 224.8 16 192 16s-61 19.7-73.3 48L32 64C14.3 64 0 78.3 0 96s14.3 32 32 32l86.7 0c12.3 28.3 40.5 48 73.3 48s61-19.7 73.3-48L480 128c17.7 0 32-14.3 32-32s-14.3-32-32-32L265.3 64z"
+            ></path>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <div id="actionDropdown" class="action-dropdown">
+      <select id="actionType">
+        <option value="registerCar">Register a Car</option>
+        <option value="search">Advanced Search</option>
+        <option value="generateReport">Generate Report</option>
+      </select>
+    </div>
+
+    <div id="registerCarContent" class="content" style="display: block">
+      <div class="container">
+        <label class="title">RegisterCar</label>
+        <form id="carRegistrationForm">
+          <input
+            type="text"
+            id="model"
+            placeholder="Model"
+            required
+            class="m"
+          />
+          <input type="text" id="year" placeholder="Year" required class="y" />
+          <input
+            type="text"
+            id="plateId"
+            placeholder="Plate ID"
+            required
+            class="t"
+          />
+          <select id="status">
+            <option value="active">Active</option>
+            <option value="out_of_service">Out of Service</option>
+            <option value="rented">Rented</option>
+          </select>
+          <button type="submit" class="submit" onclick="registerCar()">
+            Register
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <div id="searchContent" class="content" style="display: none">
+      <div class="container">
+        <label class="title">Search</label>
+        <select id="searchType">
+          <option value="carInformation">Car Information</option>
+          <option value="customerInformation">Customer Information</option>
+          <option value="reservationDay">Reservation Day</option>
+        </select>
+        <form id="search">
+          <div id="searchInputs">
+            <div id="carInfoFields" style="display: block">
+              <input type="text" id="carModel" placeholder="Car Model" />
+              <input type="text" id="carPlateId" placeholder="Car Plate ID" />
+            </div>
+            <div id="customerInfoFields" style="display: none">
+              <input
+                type="text"
+                id="customerName"
+                placeholder="Customer Name"
+              />
+              <input
+                type="text"
+                id="customerEmail"
+                placeholder="Customer Email"
+              />
+            </div>
+            <div id="reservationFields" style="display: none">
+              <input
+                type="date"
+                id="reservationDate"
+                placeholder="Reservation Date"
+              />
+            </div>
+          </div>
+          <button id="advancedSearchButton" onclick="advancedSearch()">
+            Search
+          </button>
+        </form>
+        <!-- Display search results -->
+        <div id="results"></div>
+      </div>
+    </div>
+
+    <div id="generateReportContent" class="content" style="display: none">
+      <div class="container">
+        <label class="title">Report</label>
+        <select id="reportType">
+          <option value="reservations_within_period">
+            All Reservations Within a Period
+          </option>
+          <option value="reservations_of_car_within_period">
+            All Reservations of Any Car Within a Period
+          </option>
+          <option value="status_of_cars_on_specific_day">
+            Status of All Cars on a Specific Day
+          </option>
+          <option value="reservations_of_specific_customer">
+            All Reservations of Specific Customer
+          </option>
+          <option value="daily_payments_within_period">
+            Daily Payments Within Specific Period
+          </option>
+        </select>
+        <input type="date" id="reportPeriod" />
+        <button id="generateReportButton" onclick="getreport()">
+          Generate Report
+        </button>
+        <!-- Display generated reports -->
+        <div id="reportResults"></div>
+      </div>
+    </div>
+
+    <script src="admin.js"></script>
+  </body>
+</html>
