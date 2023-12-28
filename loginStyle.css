@@ -94,20 +94,6 @@ body {
   transform: scale(0.95);
   box-shadow: rgba(133, 189, 215, 0.8784313725) 0px 15px 10px -10px;
 }
-.form .signup-button {
-  display: block;
-  width: 100%;
-  font-weight: bold;
-  background: white;
-  color: black;
-  padding-block: 15px;
-  margin: 20px auto;
-  border-radius: 20px;
-  box-shadow: rgba(133, 189, 215, 0.8784313725) 0px 20px 10px -15px;
-  border: none;
-  transition: all 0.2s ease-in-out;
-}
-
 .agreement {
   display: block;
   text-align: center;
@@ -129,6 +115,9 @@ body {
 .back-arrow {
   text-decoration: none;
   font-size: 20px;
-  color: #fff; /* Set the color to white or your desired color */
+  color: #fff;
 }
-
+.alternative-option a {
+  color: black;
+  font-weight: bold;
+}
