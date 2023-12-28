@@ -1,9 +1,6 @@
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 
-const carName = urlParams.get("name");
-const carPrice = urlParams.get("price");
-
 const carNameElement = document.querySelector(
   ".payments .details span:nth-child(2)"
 );
@@ -12,17 +9,31 @@ const carPriceElement = document.querySelector(
 );
 const priceLabelElement = document.querySelector(".checkout .footer .price");
 
-carNameElement.textContent = carName || "N/A";
-carPriceElement.textContent = carPrice
-  ? `$${parseFloat(carPrice).toFixed(2)}`
-  : "N/A";
-priceLabelElement.textContent = carPrice
-  ? `$${parseFloat(carPrice).toFixed(2)}`
+const carName = urlParams.get("name") || "N/A";
+const carPrice = urlParams.get("price")
+  ? `$${parseFloat(urlParams.get("price")).toFixed(2)}`
   : "N/A";
 
+carNameElement.textContent = carName;
+carPriceElement.textContent = carPrice;
+priceLabelElement.textContent = carPrice;
 function proceedCheckout() {
-  var locationInput = document.getElementById("location");
-  var inputValue = inputElement.locationInput;
-  alert("The value entered is: " + inputValue);
-  // continue the same with rest of the input data to put in the schema @safy @daabis @alygamal
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString);
+
+  // Retrieve the necessary card details from URL or wherever available
+  const carName = urlParams.get("name") || "N/A";
+  const carPrice = parseFloat(urlParams.get("price")) || 0; // Parse price as float
+  const bodyType = urlParams.get("bodyType") || "N/A";
+  const imageUrl =
+    urlParams.get("imageUrl") || "https://via.placeholder.com/150"; // Placeholder image if not available
+
+  // Construct URL with all card details as query parameters
+  const params = new URLSearchParams();
+  params.append("name", carName);
+  params.append("price", carPrice); // Assign the numeric price directly without formatting
+  params.append("bodyType", bodyType);
+  params.append("imageUrl", imageUrl);
+
+  window.location.href = `reservations.html?${params.toString()}`;
 }
