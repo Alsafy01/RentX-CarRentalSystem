@@ -129,7 +129,7 @@ function renderCards(cards) {
 
     const addButton = card.querySelector(".card-btn");
     addButton.addEventListener("click", function () {
-      addToCards(cardData.name, cardData.price);
+      addToCards(cardData);
     });
 
     cardsContainer.appendChild(card);
@@ -210,8 +210,11 @@ function returnToOriginal() {
   searchInput.value = "";
 }
 
-function addToCards(cardName, cardPrice) {
-  window.location.href = `checkout.html?name=${encodeURIComponent(
-    cardName
-  )}&price=${encodeURIComponent(cardPrice)}`;
+function addToCards(cardData) {
+  const params = new URLSearchParams();
+  params.append("name", cardData.name);
+  params.append("price", cardData.price);
+  params.append("bodyType", cardData.bodyType);
+  params.append("imageUrl", cardData.imageUrl);
+  window.location.href = `checkout.html?${params.toString()}`;
 }
