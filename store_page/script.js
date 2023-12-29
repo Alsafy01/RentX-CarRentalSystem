@@ -199,7 +199,7 @@ function saveFilters() {
 }
 let originalCardsData = cardsData.slice(); // Create a copy of the original data
 
-function returnToOriginal() {
+/*function returnToOriginal() {
   filteredCards = [];
   renderCards(originalCardsData);
   const radioButtons = document.querySelectorAll('input[type="radio"]');
@@ -208,10 +208,20 @@ function returnToOriginal() {
   });
   const searchInput = document.getElementById("searchInput");
   searchInput.value = "";
-}
+}*/
 
 function addToCards(cardName, cardPrice) {
   window.location.href = `../checkout.html?name=${encodeURIComponent(
     cardName
   )}&price=${encodeURIComponent(cardPrice)}`;
+}
+
+function login() {
+  // Navigate to the login page
+  window.location.href = "../login/login.html"; // Update the path accordingly
+}
+
+function signup() {
+  // Navigate to the signup page
+  window.location.href = "../login/signup.html"; // Update the path accordingly
 }
