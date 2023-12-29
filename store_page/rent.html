@@ -39,52 +39,159 @@
     <!-- Login/Signup buttons on the right -->
     <div class="auth-buttons">
       <button onclick="login()"class="filter"style="background: none;color: white" >Login</button>
-      <button onclick="signup()"class="filter" style="border-radius: 5px" >Signup</button>
+      <button onclick="signup()"class="filter" style="border-radius: px" >Signup</button>
     </div>
   </div>
 </header>
 
-    <div class="filter-modal" id="filterModal">
+<div class="filter-modal" id="filterModal">
       <div class="filter-content">
         <span class="exit-btn" onclick="closeFilterSettings()">X</span>
         <div class="filter-categories">
-          <div class="filter-category">
-            <div class="category-header" onclick="toggleCategory('category1')">
-              Body Type <span class="dropdown-arrow">&#9660;</span>
-            </div>
-            <div class="category-settings" id="category1">
-              <form>
-                <input type="radio" name="radioSedan" />
-                <span>sedan</span>
-                <input type="radio" name="radioSuv" />
-                <span>SUV</span>
-                <input type="radio" name="radioHatch" />
-                <span>hatchback</span>
-              </form>
-            </div>
-          </div>
+	
+      <div class="filter-category">
+        <div class="category-header" onclick="toggleCategory('filterCarID')">
+          Car ID <span class="dropdown-arrow">&#9660;</span>
+        </div>
+        <div class="category-settings" id="filterCarID">
+          <input type="text" name="car_id" placeholder="Enter Car ID" />
+        </div>
+      </div>
 
-          <div class="filter-category">
-            <div class="category-header" onclick="toggleCategory('category2')">
-              Price Range <span class="dropdown-arrow">&#9660;</span>
-            </div>
-            <div class="category-settings" id="category2">
-              <!-- Add settings for Category 2 -->
-              <form>
-                <input type="radio" name="radio1" />
-                <span>under 500$</span>
-                <input type="radio" name="radio2" />
-                <span>500$-800$</span>
-                <input type="radio" name="radio3" />
-                <span>above 800$</span>
-              </form>
-            </div>
+      <div class="filter-category">
+        <div class="category-header" onclick="toggleCategory('filterModel')">
+          Model <span class="dropdown-arrow">&#9660;</span>
+        </div>
+        <div class="category-settings" id="filterModel">
+          <!-- Use multi-select chips for model -->
+          <!-- Example: -->
+          <div>
+            <input type="checkbox" name="model" value="sedan" />
+            <label for="model_sedan">Sedan</label>
+          </div>
+          <div>
+            <input type="checkbox" name="model" value="SUV" />
+            <label for="model_SUV">SUV</label>
+          </div>
+          <!-- Add more options as needed -->
+        </div>
+      </div>
+
+      <div class="filter-category">
+        <div class="category-header" onclick="toggleCategory('filterBrand')">
+          Brand <span class="dropdown-arrow">&#9660;</span>
+        </div>
+        <div class="category-settings" id="filterBrand">
+          <!-- Use multi-select chips for brand -->
+          <!-- Example: -->
+          <div>
+            <input type="checkbox" name="brand" value="Toyota" />
+            <label for="brand_Toyota">Toyota</label>
+          </div>
+          <div>
+            <input type="checkbox" name="brand" value="Tesla" />
+            <label for="brand_Tesla">Tesla</label>
+          </div>
+          <!-- Add more options as needed -->
+        </div>
+      </div>
+
+      <div class="filter-category">
+        <div class="category-header" onclick="toggleCategory('filterYear')">
+          Year <span class="dropdown-arrow">&#9660;</span>
+        </div>
+        <div class="category-settings" id="filterYear">
+          <!-- Use range slider for year -->
+          <!-- Example: -->
+          <input type="range" name="year" min="2000" max="2023" />
+        </div>
+      </div>
+
+      <div class="filter-category">
+        <div class="category-header" onclick="toggleCategory('filterPlateID')">
+          Plate ID <span class="dropdown-arrow">&#9660;</span>
+        </div>
+        <div class="category-settings" id="filterPlateID">
+          <input type="text" name="plate_id" placeholder="Enter Plate ID" />
+        </div>
+      </div>
+
+      <div class="filter-category">
+        <div class="category-header" onclick="toggleCategory('filterStatus')">
+          Status <span class="dropdown-arrow">&#9660;</span>
+        </div>
+        <div class="category-settings" id="filterStatus">
+          <!-- Use radio buttons for status -->
+          <!-- Example: -->
+          <div>
+            <input type="radio" name="status" value="active" />
+            <label for="status_active">Active</label>
+          </div>
+          <div>
+            <input type="radio" name="status" value="out_of_service" />
+            <label for="status_out_of_service">Out of Service</label>
+          </div>
+          <div>
+            <input type="radio" name="status" value="rented" />
+            <label for="status_rented">Rented</label>
           </div>
         </div>
-
-        <button class="save-btn" onclick="saveFilters()">Save</button>
       </div>
+
+      <div class="filter-category">
+        <div class="category-header" onclick="toggleCategory('filterPricePerDay')">
+          Price per Day <span class="dropdown-arrow">&#9660;</span>
+        </div>
+        <div class="category-settings" id="filterPricePerDay">
+          <!-- Use range slider for price per day -->
+          <!-- Example: -->
+          <input type="range" name="price_per_day" min="0" max="1000" />
+        </div>
+      </div>
+
+      <div class="filter-category">
+        <div class="category-header" onclick="toggleCategory('filterBodyShape')">
+          Body Shape <span class="dropdown-arrow">&#9660;</span>
+        </div>
+        <div class="category-settings" id="filterBodyShape">
+          <!-- Use checkboxes for body shape -->
+          <!-- Example: -->
+          <div>
+            <input type="checkbox" name="body_shape" value="sedan" />
+            <label for="body_shape_sedan">Sedan</label>
+          </div>
+          <div>
+            <input type="checkbox" name="body_shape" value="SUV" />
+            <label for="body_shape_SUV">SUV</label>
+          </div>
+          <!-- Add more options as needed -->
+        </div>
+      </div>
+
+      <div class="filter-category">
+        <div class="category-header" onclick="toggleCategory('filterColor')">
+          Color <span class="dropdown-arrow">&#9660;</span>
+        </div>
+        <div class="category-settings" id="filterColor">
+          <!-- Use checkboxes for color -->
+          <!-- Example: -->
+          <div>
+            <input type="checkbox" name="color" value="red" />
+            <label for="color_red">Red</label>
+          </div>
+          <div>
+            <input type="checkbox" name="color" value="blue" />
+            <label for="color_blue">Blue</label>
+          </div>
+          <!-- Add more options as needed -->
+        </div>
+      </div>
+
     </div>
+
+    <button class="save-btn" onclick="saveFilters()">Save</button>
+  </div>
+</div>
 
     <div class="cards-container" id="cardsContainer">
       <!-- Cards will be dynamically added here using JavaScript -->

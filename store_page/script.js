@@ -36,7 +36,7 @@ function toggleCategory(categoryId) {
   }
 }
 
-const cardsData = [
+const cardsData_1 = [
   {
     name: "Toyota",
     price: 1000,
@@ -102,6 +102,62 @@ const cardsData = [
   },
 ];
 
+const cardData = [
+  {
+    brand: "Toyota",
+    model: "Corolla",
+    year: 2022,
+    plate_id: "ABC123",
+    status: "active",
+    price_per_day: 1000,
+    body_shape: "sedan",
+    color: "blue",
+    car_image: "https://png.pngtree.com/png-clipart/20210725/original/pngtree-car-tool-transport-car-sports-car-png-image_6561566.png",
+  },
+  {
+    brand: "Toyota",
+    model: "Rav4",
+    year: 2023,
+    plate_id: "XYZ456",
+    status: "active",
+    price_per_day: 500,
+    body_shape: "SUV",
+    color: "black",
+    car_image: "https://png.pngtree.com/png-clipart/20210725/original/pngtree-car-gray-transportation-reception-sports-car-png-image_6561593.png",
+  },
+  {
+    brand: "Tesla",
+    model: "Model 3",
+    year: 2022,
+    plate_id: "DEF789",
+    status: "active",
+    price_per_day: 600,
+    body_shape: "hatchback",
+    color: "white",
+    car_image: "https://png.pngtree.com/png-clipart/20210725/original/pngtree-mobility-tool-for-car-transportation-png-image_6561561.png",
+  },{
+    brand: "Audi",
+    model: "Q5",
+    year: 2022,
+    plate_id: "GHI123",
+    status: "active",
+    price_per_day: 800,
+    body_shape: "SUV",
+    color: "silver",
+    car_image: "https://png.pngtree.com/png-clipart/20210725/original/pngtree-car-tool-transport-car-sports-car-png-image_6561566.png",
+  },
+  {
+    brand: "Audi",
+    model: "A4",
+    year: 2023,
+    plate_id: "JKL456",
+    status: "active",
+    price_per_day: 900,
+    body_shape: "sedan",
+    color: "red",
+    car_image: "https://png.pngtree.com/png-clipart/20210725/original/pngtree-car-white-transport-car-sports-car-png-image_6561580.png",
+  },];
+  
 function renderCards(cards) {
   const cardsContainer = document.getElementById("cardsContainer");
   cardsContainer.innerHTML = "";
@@ -112,15 +168,17 @@ function renderCards(cards) {
 
     card.innerHTML = `
 	  <div class="card-img" style="background-image: url(${
-      cardData.imageUrl
+      cardData.car_image
     });"></div>
-      <div class="card-title">${cardData.name}</div>
-	  <div class="card-subtitle">Product description. Lorem ipsum dolor sit amet,
+      <div class="card-title">${cardData.brand} ${cardData.model}</div>
+	  <div class="card-subtitle">${cardData.year} | Plate ID: ${cardData.plate_id} | Status: ${cardData.status}</div>
       <hr class="card-divider">
       <div class="card-footer">
-          <div class="card-price"><span>$</span> ${cardData.price.toFixed(
-            2
-          )}</div>
+          <div class="card-price" style="background-color: ${
+            cardData.status === "reserved" ? "lightyellow" : "lightgreen"
+          };"><span>$</span> <strong>${cardData.price_per_day.toFixed(
+      2
+    )}</strong></div>
           <button class="card-btn">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="m397.78 316h-205.13a15 15 0 0 1 -14.65-11.67l-34.54-150.48a15 15 0 0 1 14.62-18.36h274.27a15 15 0 0 1 14.65 18.36l-34.6 150.48a15 15 0 0 1 -14.62 11.67zm-193.19-30h181.25l27.67-120.48h-236.6z"></path><path d="m222 450a57.48 57.48 0 1 1 57.48-57.48 57.54 57.54 0 0 1 -57.48 57.48zm0-84.95a27.48 27.48 0 1 0 27.48 27.47 27.5 27.5 0 0 0 -27.48-27.47z"></path><path d="m368.42 450a57.48 57.48 0 1 1 57.48-57.48 57.54 57.54 0 0 1 -57.48 57.48zm0-84.95a27.48 27.48 0 1 0 27.48 27.47 27.5 27.5 0 0 0 -27.48-27.47z"></path><path d="m158.08 165.49a15 15 0 0 1 -14.23-10.26l-25.71-77.23h-47.44a15 15 0 1 1 0-30h58.3a15 15 0 0 1 14.23 10.26l29.13 87.49a15 15 0 0 1 -14.23 19.74z"></path></svg>
           </button>
@@ -129,14 +187,15 @@ function renderCards(cards) {
 
     const addButton = card.querySelector(".card-btn");
     addButton.addEventListener("click", function () {
-      addToCards(cardData.name, cardData.price);
+      addToCards(cardData.brand + " " + cardData.model, cardData.price_per_day);
     });
 
     cardsContainer.appendChild(card);
   });
 }
 
-renderCards(cardsData);
+
+renderCards(cardData);
 
 let filteredCards = []; // Store searched cars globally to perform the filter on them directly
 
@@ -144,71 +203,116 @@ function performSearch() {
   const searchInput = document.getElementById("searchInput");
   const searchTerm = searchInput.value.toLowerCase();
 
-  filteredCards = cardsData.filter((card) =>
-    card.name.toLowerCase().includes(searchTerm)
+  const filteredCardData = cardData.filter((card) =>
+    card.brand.toLowerCase().includes(searchTerm) ||
+    card.model.toLowerCase().includes(searchTerm) ||
+    card.color.toLowerCase().includes(searchTerm) ||
+    card.body_shape.toLowerCase().includes(searchTerm)
   );
-  renderCards(filteredCards);
+  renderCards(filteredCardData);
 }
 
 function saveFilters() {
-  const selectedBodyType = document.querySelector(
-    'input[name="radioSedan"]:checked'
-  )
-    ? "sedan"
-    : document.querySelector('input[name="radioSuv"]:checked')
-    ? "SUV"
-    : document.querySelector('input[name="radioHatch"]:checked')
-    ? "hatchback"
-    : null;
+  const carId = document.querySelector('input[name="car_id"]').value.toLowerCase();
+  const selectedModels = Array.from(
+    document.querySelectorAll('input[name="model"]:checked')
+  ).map((checkbox) => checkbox.value.toLowerCase());
 
-  const selectedPrice = document.querySelector('input[name="radio1"]:checked')
-    ? "under 500$"
-    : document.querySelector('input[name="radio2"]:checked')
-    ? "500$-800$"
-    : document.querySelector('input[name="radio3"]:checked')
-    ? "above 800$"
-    : null;
+  const selectedBrands = Array.from(
+    document.querySelectorAll('input[name="brand"]:checked')
+  ).map((checkbox) => checkbox.value.toLowerCase());
 
-  let newlyFilteredCards = filteredCards.slice(); //copy the searched cars performed
+  const selectedYear = document.querySelector('input[name="year"]').value;
 
-  if (selectedBodyType) {
+  const plateId = document.querySelector('input[name="plate_id"]').value.toLowerCase();
+
+  const selectedStatus = document.querySelector('input[name="status"]:checked')?.value.toLowerCase();
+
+  const pricePerDay = document.querySelector('input[name="price_per_day"]').value;
+
+  const selectedBodyShapes = Array.from(
+    document.querySelectorAll('input[name="body_shape"]:checked')
+  ).map((checkbox) => checkbox.value.toLowerCase());
+
+  const selectedColors = Array.from(
+    document.querySelectorAll('input[name="color"]:checked')
+  ).map((checkbox) => checkbox.value.toLowerCase());
+
+  let newlyFilteredCards = cardData.slice(); // Start with the extended data
+
+  if (carId) {
     newlyFilteredCards = newlyFilteredCards.filter(
-      (card) =>
-        card.bodyType &&
-        card.bodyType.toLowerCase() === selectedBodyType.toLowerCase()
+      (card) => card.plate_id && card.plate_id.toLowerCase().includes(carId)
     );
   }
 
-  if (selectedPrice === "under 500$") {
-    newlyFilteredCards = newlyFilteredCards.filter((card) => card.price < 500);
-  } else if (selectedPrice === "500$-800$") {
-    newlyFilteredCards = newlyFilteredCards.filter(
-      (card) => card.price >= 500 && card.price <= 800
+  if (selectedModels.length > 0) {
+    newlyFilteredCards = newlyFilteredCards.filter((card) =>
+      selectedModels.includes(card.body_shape.toLowerCase())
     );
-  } else if (selectedPrice === "above 800$") {
-    newlyFilteredCards = newlyFilteredCards.filter((card) => card.price > 800);
   }
 
-  const radioButtons = document.querySelectorAll('input[type="radio"]');
-  radioButtons.forEach((button) => {
-    button.checked = false;
+  if (selectedBrands.length > 0) {
+    newlyFilteredCards = newlyFilteredCards.filter((card) =>
+      selectedBrands.includes(card.brand.toLowerCase())
+    );
+  }
+
+  if (selectedYear) {
+    newlyFilteredCards = newlyFilteredCards.filter(
+      (card) => card.year && card.year.toString() === selectedYear
+    );
+  }
+
+  if (plateId) {
+    newlyFilteredCards = newlyFilteredCards.filter(
+      (card) => card.plate_id && card.plate_id.toLowerCase().includes(plateId)
+    );
+  }
+
+  if (selectedStatus) {
+    newlyFilteredCards = newlyFilteredCards.filter(
+      (card) => card.status && card.status.toLowerCase() === selectedStatus
+    );
+  }
+
+  if (pricePerDay) {
+    newlyFilteredCards = newlyFilteredCards.filter(
+      (card) => card.price_per_day && card.price_per_day <= parseFloat(pricePerDay)
+    );
+  }
+
+  if (selectedBodyShapes.length > 0) {
+    newlyFilteredCards = newlyFilteredCards.filter((card) =>
+      selectedBodyShapes.includes(card.body_shape.toLowerCase())
+    );
+  }
+
+  if (selectedColors.length > 0) {
+    newlyFilteredCards = newlyFilteredCards.filter((card) =>
+      selectedColors.includes(card.color.toLowerCase())
+    );
+  }
+
+  // Clear form inputs
+  const formInputs = document.querySelectorAll(
+    'input[type="text"], input[type="checkbox"], input[type="radio"], input[type="range"]'
+  );
+  formInputs.forEach((input) => {
+    if (input.type === 'checkbox' || input.type === 'radio') {
+      input.checked = false;
+    } else {
+      input.value = '';
+    }
   });
 
   renderCards(newlyFilteredCards);
   closeFilterSettings();
 }
-let originalCardsData = cardsData.slice(); // Create a copy of the original data
 
-/*function returnToOriginal() {
-  filteredCards = [];
-  renderCards(originalCardsData);
-  const radioButtons = document.querySelectorAll('input[type="radio"]');
-  radioButtons.forEach((button) => {
-    button.checked = false;
-  });
-  const searchInput = document.getElementById("searchInput");
-  searchInput.value = "";
-}*/
+
+let originalCardsData = cardData.slice(); // Create a copy of the original data
+
 
 function addToCards(cardName, cardPrice) {
   window.location.href = `../checkout.html?name=${encodeURIComponent(
