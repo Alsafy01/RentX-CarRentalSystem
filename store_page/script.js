@@ -213,87 +213,42 @@ function performSearch() {
 }
 
 function saveFilters() {
-  const carId = document.querySelector('input[name="car_id"]').value.toLowerCase();
-  const selectedModels = Array.from(
-    document.querySelectorAll('input[name="model"]:checked')
-  ).map((checkbox) => checkbox.value.toLowerCase());
+  // Get filter values from HTML elements
+  const carIdFilter = document.querySelector('[name="car_id"]').value.trim().toLowerCase();
+  const selectedBrands = Array.from(document.querySelectorAll('[name="brand"]:checked')).map(checkbox => checkbox.value);
+  const selectedYear = document.querySelector('[name="year"]').value;
+  const selectedStatus = document.querySelector('[name="status"]:checked') ? document.querySelector('[name="status"]:checked').value : null;
+  const pricePerDayFilter = document.querySelector('[name="price_per_day"]').value;
+  const selectedBodyShapes = Array.from(document.querySelectorAll('[name="body_shape"]:checked')).map(checkbox => checkbox.value);
+  const selectedColors = Array.from(document.querySelectorAll('[name="color"]:checked')).map(checkbox => checkbox.value);
 
-  const selectedBrands = Array.from(
-    document.querySelectorAll('input[name="brand"]:checked')
-  ).map((checkbox) => checkbox.value.toLowerCase());
 
-  const selectedYear = document.querySelector('input[name="year"]').value;
+  // Apply filters separately and store the results
+  const filteredCarId = carIdFilter ? cardData.filter(card => card.plate_id.toLowerCase().includes(carIdFilter)) : cardData;
+  console.log("Filtered by Plate ID:", filteredCarId);
 
-  const plateId = document.querySelector('input[name="plate_id"]').value.toLowerCase();
+  const filteredBrands = selectedBrands.length > 0 ? filteredCarId.filter(card => selectedBrands.includes(card.brand)) : filteredCarId;
+  console.log("Filtered by Brands:", filteredBrands);
 
-  const selectedStatus = document.querySelector('input[name="status"]:checked')?.value.toLowerCase();
+  const filteredYear = selectedYear ? filteredBrands.filter(card => card.year == selectedYear) : filteredBrands;
+  console.log("Filtered by Year:", filteredYear);
 
-  const pricePerDay = document.querySelector('input[name="price_per_day"]').value;
+  const filteredStatus = selectedStatus ? filteredYear.filter(card => card.status === selectedStatus) : filteredYear;
+  console.log("Filtered by Status:", filteredStatus);
 
-  const selectedBodyShapes = Array.from(
-    document.querySelectorAll('input[name="body_shape"]:checked')
-  ).map((checkbox) => checkbox.value.toLowerCase());
+  const filteredPricePerDay = pricePerDayFilter ? filteredStatus.filter(card => card.price_per_day <= pricePerDayFilter) : filteredStatus;
+  console.log("Filtered by Price Per Day:", filteredPricePerDay);
 
-  const selectedColors = Array.from(
-    document.querySelectorAll('input[name="color"]:checked')
-  ).map((checkbox) => checkbox.value.toLowerCase());
+  const filteredBodyShapes = selectedBodyShapes.length > 0 ? filteredPricePerDay.filter(card => selectedBodyShapes.includes(card.body_shape)) : filteredPricePerDay;
+  console.log("Filtered by Body Shapes:", filteredBodyShapes);
 
-  let newlyFilteredCards = cardData.slice(); // Start with the extended data
+  const filteredColors = selectedColors.length > 0 ? filteredBodyShapes.filter(card => selectedColors.includes(card.color)) : filteredBodyShapes;
+  console.log("Filtered by Colors:", filteredColors);
 
-  if (carId) {
-    newlyFilteredCards = newlyFilteredCards.filter(
-      (card) => card.plate_id && card.plate_id.toLowerCase().includes(carId)
-    );
-  }
 
-  if (selectedModels.length > 0) {
-    newlyFilteredCards = newlyFilteredCards.filter((card) =>
-      selectedModels.includes(card.body_shape.toLowerCase())
-    );
-  }
-
-  if (selectedBrands.length > 0) {
-    newlyFilteredCards = newlyFilteredCards.filter((card) =>
-      selectedBrands.includes(card.brand.toLowerCase())
-    );
-  }
-
-  if (selectedYear) {
-    newlyFilteredCards = newlyFilteredCards.filter(
-      (card) => card.year && card.year.toString() === selectedYear
-    );
-  }
-
-  if (plateId) {
-    newlyFilteredCards = newlyFilteredCards.filter(
-      (card) => card.plate_id && card.plate_id.toLowerCase().includes(plateId)
-    );
-  }
-
-  if (selectedStatus) {
-    newlyFilteredCards = newlyFilteredCards.filter(
-      (card) => card.status && card.status.toLowerCase() === selectedStatus
-    );
-  }
-
-  if (pricePerDay) {
-    newlyFilteredCards = newlyFilteredCards.filter(
-      (card) => card.price_per_day && card.price_per_day <= parseFloat(pricePerDay)
-    );
-  }
-
-  if (selectedBodyShapes.length > 0) {
-    newlyFilteredCards = newlyFilteredCards.filter((card) =>
-      selectedBodyShapes.includes(card.body_shape.toLowerCase())
-    );
-  }
-
-  if (selectedColors.length > 0) {
-    newlyFilteredCards = newlyFilteredCards.filter((card) =>
-      selectedColors.includes(card.color.toLowerCase())
-    );
-  }
-
+  // After filtering, you can update the UI with the merged result
+  closeFilterSettings();
+  renderCards(filteredColors);
   // Clear form inputs
   const formInputs = document.querySelectorAll(
     'input[type="text"], input[type="checkbox"], input[type="radio"], input[type="range"]'
@@ -305,10 +260,10 @@ function saveFilters() {
       input.value = '';
     }
   });
-
-  renderCards(newlyFilteredCards);
-  closeFilterSettings();
+  
 }
+
+
 
 
 let originalCardsData = cardData.slice(); // Create a copy of the original data
