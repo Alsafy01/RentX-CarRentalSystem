@@ -27,13 +27,19 @@
             ></path>
           </svg>
         </button>
-      <button class="filter" onclick="returnToOriginal()">Return</button>
+		
+      <button class="filter"style="width: 100px;"onclick="toggleDropdown()">Reservations</button>
+<div class="notification-dropdown" id="notificationDropdown">
+  <!-- Notifications will be loaded dynamically here -->
+</div>
+
     </div>
+
 
     <!-- Login/Signup buttons on the right -->
     <div class="auth-buttons">
-      <button onclick="login()"class="filter" >Login</button>
-      <button onclick="signup()"class="filter" >Signup</button>
+      <button onclick="login()"class="filter"style="background: none;color: white" >Login</button>
+      <button onclick="signup()"class="filter" style="border-radius: 5px" >Signup</button>
     </div>
   </div>
 </header>

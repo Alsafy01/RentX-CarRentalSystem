@@ -443,4 +443,89 @@ a:hover {
   gap: 10px;
 }
 
-/* Add any additional styling as needed */
+.notification-dropdown {
+  display: none;
+  position: absolute;
+  top: 40px; /* Adjust the top position as needed */
+  left: 0; /* Adjust the left position as needed */
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1; /* Set a higher z-index to ensure it appears above other elements */
+  border-radius: 10px;
+}
+
+.notification-dropdown p {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+.notification-list {
+  list-style: none;
+  padding: 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  border-radius: 10px;
+}
+.notification-item {
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s, box-shadow 0.3s;
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  border-radius: 5px;
+}
+/* Add hover effect */
+.notification-item:hover {
+  background-color: #f0f0f0; /* Adjust the color as needed */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, .7);
+}
+
+/* Add click animation */
+.notification-item:active {
+  background-color: #d0d0d0; /* Adjust the color as needed */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.notification-icon {
+  width: 40px;
+  height: 40px;
+  background-size: cover;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.car-info {
+  display: flex;
+  flex-direction: column;
+  margin-right: 10px;
+}
+
+.car-details {
+  margin-bottom: 5px;
+}
+
+.car-details p {
+  margin: 0;
+}
+
+.car-details p:first-child {
+  font-weight: bold;
+}
+
+.car-details p:last-child {
+  color: #666;
+}
+
+.car-details p:nth-child(2) {
+  font-size: 14px;
+  color: #333;
+}
+
+.car-details p:nth-child(3) {
+  font-size: 12px;
+  color: #999;
+}

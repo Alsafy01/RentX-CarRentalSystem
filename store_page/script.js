@@ -225,3 +225,101 @@ function signup() {
   // Navigate to the signup page
   window.location.href = "../login/signup.html"; // Update the path accordingly
 }
+
+function toggleDropdown() {
+  var dropdown = document.getElementById("notificationDropdown");
+  var reservationsButton = document.querySelector('.filter');
+
+  var rect = reservationsButton.getBoundingClientRect();
+  dropdown.style.position = 'absolute';
+  dropdown.style.top = rect.bottom + 'px';  // Position below the button
+  dropdown.style.left = rect.left + 'px';  // Align with the left edge of the button
+  dropdown.style.display = dropdown.style.display === 'none' || dropdown.style.display === '' ? 'block' : 'none';
+  loadNotifications()
+}
+
+// Close the dropdown if the user clicks outside of it
+window.onclick = function (event) {
+  if (!event.target.matches('.filter')) {
+    var dropdown = document.getElementById("notificationDropdown");
+    if (dropdown.style.display === "block") {
+      dropdown.style.display = "none";
+    }
+  }
+}
+
+const reserves = [
+  {
+    name: "Toyota",
+    price: 1000,
+    reservationId: 48,
+    status: "reserved",
+    imageUrl:
+      "https://png.pngtree.com/png-clipart/20210725/original/pngtree-car-gray-transportation-reception-sports-car-png-image_6561593.png",
+  },
+  {
+    name: "Ford",
+    price: 500,
+    reservationId: 32,
+    status: "picked_up",
+    imageUrl:
+      "https://png.pngtree.com/png-clipart/20210725/original/pngtree-mobility-tool-for-car-transportation-png-image_6561561.png",
+  },
+  // Add more card data as needed
+];
+
+function loadNotifications() {
+  const dropdown = document.getElementById("notificationDropdown");
+  dropdown.innerHTML = ""; // Clear previous content
+
+  reserves.forEach(card => {
+    const notificationItem = document.createElement("div");
+    notificationItem.className = "notification-item";
+
+    // Car picture, ID, and name container
+    const carInfoContainer = document.createElement("div");
+    carInfoContainer.className = "car-info";
+
+    // Car picture (icon)
+    const icon = document.createElement("div");
+    icon.className = "notification-icon";
+    icon.style.backgroundImage = `url(${card.imageUrl})`;
+    carInfoContainer.appendChild(icon);
+
+    // Car ID and name
+    const carDetails = document.createElement("div");
+    carDetails.className = "car-details";
+    const carIdName = document.createElement("p");
+    carIdName.textContent = `ID: ${card.reservationId} - ${card.name}`;
+    carDetails.appendChild(carIdName);
+    carInfoContainer.appendChild(carDetails);
+
+    // Status
+    const status = document.createElement("p");
+    status.textContent = `${card.status}`;
+	status.style.borderRadius = "5px";
+    status.style.color = card.status === "reserved" ? "darkkhaki" : "green";
+    status.style.background = card.status === "reserved" ? "lightyellow" : "lightgreen";
+    notificationItem.appendChild(carInfoContainer);
+    notificationItem.appendChild(status);
+
+    // Price
+    const price = document.createElement("p");
+    price.textContent = `$${card.price.toFixed(2)}`;
+    price.style.fontWeight = "bold";
+    price.style.color = "black";
+    notificationItem.appendChild(price);
+	notificationItem.addEventListener("click", function () {
+      handleNotificationClick(card);
+    });
+
+    dropdown.appendChild(notificationItem);
+  });
+}
+
+function handleNotificationClick(card) {
+  // Handle the click event for the notification item
+  // You can navigate to a specific page or perform any other action
+  console.log(`Clicked on ${card.name} (ID: ${card.reservationId})`);
+  // Add your logic here
+}
