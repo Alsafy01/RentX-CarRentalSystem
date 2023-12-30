@@ -290,16 +290,6 @@ function addToCards(cardName, cardPrice) {
   )}&price=${encodeURIComponent(cardPrice)}`;
 }
 
-function login() {
-  // Navigate to the login page
-  window.location.href = "../login/login.html"; // Update the path accordingly
-}
-
-function signup() {
-  // Navigate to the signup page
-  window.location.href = "../login/signup.html"; // Update the path accordingly
-}
-
 function toggleDropdown() {
   var dropdown = document.getElementById("notificationDropdown");
   var reservationsButton = document.querySelector('.filter');
@@ -397,3 +387,92 @@ function handleNotificationClick(card) {
   console.log(`Clicked on ${card.name} (ID: ${card.reservationId})`);
   // Add your logic here
 }
+
+function login() {
+  // Navigate to the login page
+  window.location.href = "../login/login.html"; // Update the path accordingly
+}
+
+function debug() {
+  // Navigate to the signup page
+  window.location.href = "../admin/admin.html"; // Update the path accordingly
+}
+
+function signup() {
+  // Navigate to the signup page
+  window.location.href = "../login/signup.html"; // Update the path accordingly
+}
+
+function checkUserLoggedIn() {
+            // Replace this with your actual logic to check if the user is logged in
+            // For demonstration purposes, let's use a simple boolean variable
+            return true; // Change this to true if the user is logged in
+        }
+// Assume there's a function to check if the user is an admin
+function isAdmin() {
+	// Replace this with your actual logic to check if the user is an admin
+	// For demonstration purposes, let's use a simple boolean variable
+	return true; // Change this to false if the user is not an admin
+}
+
+// Function to render or hide login/signup buttons based on user login status
+// Function to render or hide login/signup buttons based on user login status
+function renderAuthButtons() {
+const authButtonsContainer = document.getElementById("authButtons");
+
+// Check if the user is logged in
+const isLoggedIn = checkUserLoggedIn();
+
+// Clear existing buttons
+authButtonsContainer.innerHTML = "";
+
+if (!isLoggedIn) {
+	// Render buttons only if the user is not logged in
+	const loginButton = document.createElement("button");
+	loginButton.textContent = "Login";
+	loginButton.className = "filter";
+	loginButton.style = "background: none; color: white";
+	loginButton.addEventListener("click", login);
+
+	const signupButton = document.createElement("button");
+	signupButton.textContent = "Signup";
+	signupButton.className = "filter";
+	signupButton.style = "border-radius: px";
+	signupButton.addEventListener("click", signup);
+
+	// Append buttons to the container
+	authButtonsContainer.appendChild(loginButton);
+	authButtonsContainer.appendChild(signupButton);
+}else{
+	// If the user is logged in, render the "Reservations" button
+	const reservationsButton = document.createElement("button");
+	reservationsButton.textContent = "Reservations";
+	reservationsButton.className = "filter reservations-button";
+	reservationsButton.style = "width: 100px;";
+	reservationsButton.addEventListener("click", toggleDropdown);
+	
+	const notificationDropdown = document.createElement("div");
+	notificationDropdown.className = "notification-dropdown";
+	notificationDropdown.id = "notificationDropdown";
+				
+	// Append the "Reservations" button to the container
+	reserveButton.appendChild(reservationsButton);
+	reserveButton.appendChild(notificationDropdown);
+	// Check if the user is an admin
+	if (isAdmin()) {
+		// If the user is an admin, render the "Debug" button
+		const debugButton = document.createElement("button");
+		debugButton.textContent = "Debug";
+		debugButton.className = "filter";
+		debugButton.style = "background: none; color: white";
+		debugButton.addEventListener("click", debug);
+		
+		// Append the "Debug" button to the container
+		authButtonsContainer.appendChild(debugButton);
+	}
+}
+// If the user is logged in, no buttons will be rendered
+}
+
+// Initial render when the page loads
+renderAuthButtons();

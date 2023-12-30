@@ -28,19 +28,19 @@
           </svg>
         </button>
 		
-      <button class="filter"style="width: 100px;"onclick="toggleDropdown()">Reservations</button>
-<div class="notification-dropdown" id="notificationDropdown">
-  <!-- Notifications will be loaded dynamically here -->
-</div>
+		<div class="auth-buttons" id="reserveButton">
+            <!-- Buttons will be rendered here -->
+        </div>
+		
+      
 
     </div>
 
 
     <!-- Login/Signup buttons on the right -->
-    <div class="auth-buttons">
-      <button onclick="login()"class="filter"style="background: none;color: white" >Login</button>
-      <button onclick="signup()"class="filter" style="border-radius: px" >Signup</button>
-    </div>
+        <div class="auth-buttons" id="authButtons">
+            <!-- Buttons will be rendered here -->
+        </div>
   </div>
 </header>
 
@@ -128,6 +128,7 @@
       <option value="">Select Price</option>
       <!-- Add options dynamically if needed -->
       <option value="">All</option>
+	  <option value="50">50</option>
       <option value="100">100</option>
       <!-- ... -->
       <option value="1000">1000</option>
