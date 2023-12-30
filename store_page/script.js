@@ -406,7 +406,7 @@ function signup() {
 function checkUserLoggedIn() {
             // Replace this with your actual logic to check if the user is logged in
             // For demonstration purposes, let's use a simple boolean variable
-            return true; // Change this to true if the user is logged in
+            return false; // Change this to true if the user is logged in
         }
 // Assume there's a function to check if the user is an admin
 function isAdmin() {
