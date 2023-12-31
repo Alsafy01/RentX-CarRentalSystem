@@ -1,3 +1,6 @@
+var flag = false;
+
+
 function openFilterSettings() {
   var filterModal = document.getElementById("filterModal");
   filterModal.style.display = "flex";
@@ -160,20 +163,20 @@ const cardData_2 = [
   
 var cardData=[];
 
-  function fetchData() {
-    // Make an AJAX request to fetchData.php
-    fetch('fetchData.php')
-        .then(response => response.json())
-        .then(fetchedData => {
-          cardData = fetchedData
-          renderCards(fetchedData); // Update the global variable with the fetched data
-        })
-  }
+function fetchData() {
+// Make an AJAX request to fetchData.php
+fetch('fetchData.php')
+	.then(response => response.json())
+	.then(fetchedData => {
+	  cardData = fetchedData
+	  renderCards(fetchedData); // Update the global variable with the fetched data
+	})
+}
 
 
 
 
-  function renderCards(cards) {
+function renderCards(cards) {
     const cardsContainer = document.getElementById("cardsContainer");
     cardsContainer.innerHTML = "";
   
@@ -403,28 +406,38 @@ function signup() {
   window.location.href = "../login/signup.html"; // Update the path accordingly
 }
 
-function checkUserLoggedIn() {
-            // Replace this with your actual logic to check if the user is logged in
-            // For demonstration purposes, let's use a simple boolean variable
-            return false; // Change this to true if the user is logged in
+// Logout function
+function logout() {
+    $.ajax({
+        url: "../login/logout.php", // Create a new PHP file for handling logout
+        type: "POST",
+        success: function () {
+            // After successful logout, update the login status
+            checkLoginStatus();
         }
+    });
+}
+
+function checkUserLoggedIn() {
+	console.log("checkUserLoggedIn: ",flag);
+	return flag; // Change this to true if the user is logged in
+}
 // Assume there's a function to check if the user is an admin
 function isAdmin() {
-	// Replace this with your actual logic to check if the user is an admin
-	// For demonstration purposes, let's use a simple boolean variable
+	
 	return true; // Change this to false if the user is not an admin
 }
 
-// Function to render or hide login/signup buttons based on user login status
 // Function to render or hide login/signup buttons based on user login status
 function renderAuthButtons() {
 const authButtonsContainer = document.getElementById("authButtons");
 
 // Check if the user is logged in
 const isLoggedIn = checkUserLoggedIn();
-
+console.log("renderAuthButtons: ",isLoggedIn);
 // Clear existing buttons
 authButtonsContainer.innerHTML = "";
+
 
 if (!isLoggedIn) {
 	// Render buttons only if the user is not logged in
@@ -443,8 +456,10 @@ if (!isLoggedIn) {
 	// Append buttons to the container
 	authButtonsContainer.appendChild(loginButton);
 	authButtonsContainer.appendChild(signupButton);
-}else{
-	// If the user is logged in, render the "Reservations" button
+	// Append the "Reservations" button to the container
+	
+}else{		
+// If the user is logged in, render the "Reservations" button
 	const reservationsButton = document.createElement("button");
 	reservationsButton.textContent = "Reservations";
 	reservationsButton.className = "filter reservations-button";
@@ -454,10 +469,10 @@ if (!isLoggedIn) {
 	const notificationDropdown = document.createElement("div");
 	notificationDropdown.className = "notification-dropdown";
 	notificationDropdown.id = "notificationDropdown";
-				
-	// Append the "Reservations" button to the container
-	reserveButton.appendChild(reservationsButton);
-	reserveButton.appendChild(notificationDropdown);
+// Append the "Reservations" button to the container
+	authButtonsContainer.appendChild(reservationsButton);
+	authButtonsContainer.appendChild(notificationDropdown);
+		
 	// Check if the user is an admin
 	if (isAdmin()) {
 		// If the user is an admin, render the "Debug" button
@@ -470,9 +485,43 @@ if (!isLoggedIn) {
 		// Append the "Debug" button to the container
 		authButtonsContainer.appendChild(debugButton);
 	}
+	const logoutButton = document.createElement("button");
+	logoutButton.textContent = "logout";
+	logoutButton.className = "filter";
+	logoutButton.style = "border-radius: px";
+	logoutButton.addEventListener("click", logout);
+	
+	// Append the "Debug" button to the container
+	authButtonsContainer.appendChild(logoutButton);
 }
-// If the user is logged in, no buttons will be rendered
 }
 
-// Initial render when the page loads
-renderAuthButtons();
+
+// Check if the user is logged in
+function checkLoginStatus() {
+    // Assuming you have jQuery included in your project
+    $.ajax({
+        url: "../login/checkLoginStatus.php", // Create a new PHP file for checking login status
+        type: "GET",
+        success: function (response) {
+            if (response === "true") {
+                flag = true;
+				console.log(flag);
+            } else {
+                flag = false;
+				console.log(flag);
+            }
+			renderAuthButtons();
+        }
+    });
+}
+
+// Call the function when the page loads
+$(document).ready(function () {
+    checkLoginStatus();
+	// Initial render when the page loads
+	// Attach click event to logout button
+    $("#logoutButton").click(function () {
+        logout();
+    });
+});
