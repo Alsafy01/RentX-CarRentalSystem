@@ -472,7 +472,27 @@ function loadNotifications() {
 function handleNotificationClick(card) {
   // Handle the click event for the notification item
   // You can navigate to a specific page or perform any other action
-  console.log(`Clicked on ${card.name} (ID: ${card.reservationId})`);
+  $.ajax({
+    url: "../login/checkLoginAdmin.php", // Create a new PHP file for checking login status
+    type: "GET",
+    success: function (response) {
+        if (response === "true") { 
+          
+          fetch('handelReservation.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json', // Set content type to JSON
+            },
+            body: JSON.stringify({ variable: card.reservationId }), // Convert variable to JSON and send in the request body
+        })
+        .then(response => response.json())
+        
+        } else {
+          console.log(Clicked on ${card.name} (ID: ${card.reservationId}));
+        }
+    }
+}); 
+
   // Add your logic here
 }
 
