@@ -192,7 +192,8 @@ function renderCards(cards) {
         <div class="card-title">${cardData.brand} ${cardData.model}</div>
         <div class="card-subtitle">${cardData.year} | Plate ID: ${
           cardData.plate_id
-        } | Status: ${cardData.status}</div>
+        } | Status: ${cardData.status} | Color: ${
+          cardData.color}</div>
         <hr class="card-divider">
         <div class="card-footer">
             <div class="card-price" style="background-color: ${
@@ -240,7 +241,7 @@ function saveFilters() {
   const pricePerDayFilter = document.querySelector('[name="price_per_day"]').value;
   const selectedBodyShapes = Array.from(document.querySelectorAll('[name="body_shape"]:checked')).map(checkbox => checkbox.value);
   const selectedColors = Array.from(document.querySelectorAll('[name="color"]:checked')).map(checkbox => checkbox.value);
-
+  
 
   // Apply filters separately and store the results
   const filteredCarId = carIdFilter ? cardData.filter(card => card.plate_id.toLowerCase().includes(carIdFilter)) : cardData;
@@ -262,8 +263,7 @@ function saveFilters() {
   console.log("Filtered by Body Shapes:", filteredBodyShapes);
 
   const filteredColors = selectedColors.length > 0 ? filteredBodyShapes.filter(card => selectedColors.includes(card.color)) : filteredBodyShapes;
-  console.log("Filtered by Colors:", filteredColors);
-
+  console.log("Filtered by Color:", filteredColors);
 
   // After filtering, you can update the UI with the merged result
   closeFilterSettings();

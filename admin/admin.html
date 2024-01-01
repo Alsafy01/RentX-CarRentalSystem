@@ -34,35 +34,77 @@
     </div>
 
     <div id="registerCarContent" class="content" style="display: block">
-      <div class="container">
-        <label class="title">RegisterCar</label>
-        <form id="carRegistrationForm">
-          <input
-            type="text"
-            id="model"
-            placeholder="Model"
-            required
-            class="m"
-          />
-          <input type="text" id="year" placeholder="Year" required class="y" />
-          <input
-            type="text"
-            id="plateId"
-            placeholder="Plate ID"
-            required
-            class="t"
-          />
-          <select id="status">
-            <option value="active">Active</option>
-            <option value="out_of_service">Out of Service</option>
-            <option value="rented">Rented</option>
-          </select>
-          <button type="submit" class="submit" onclick="registerCar()">
-            Register
-          </button>
-        </form>
-      </div>
-    </div>
+  <div class="container">
+    <label class="title">RegisterCar</label>
+    <form id="carRegistrationForm">
+      <input
+        type="text"
+        id="model"
+        placeholder="Model"
+        required
+        class="m"
+      />
+      <input
+        type="text"
+        id="brand"
+        placeholder="Brand"
+        required
+        class="m"
+      />
+      <input
+        type="text"
+        id="year"
+        placeholder="Year"
+        required
+        class="y"
+      />
+      <input
+        type="text"
+        id="plateId"
+        placeholder="Plate ID"
+        required
+        class="t"
+      />
+      <select id="status">
+        <option value="active">Active</option>
+        <option value="out_of_service">Out of Service</option>
+        <option value="rented">Rented</option>
+      </select>
+      <input
+        type="number"
+        id="pricePerDay"
+        placeholder="Price Per Day"
+        required
+        class="t"
+      />
+      <label for="bodyShape" >Body-Shape:</label>
+      <select id="bodyShape" class="t">
+        <option value="sedan">Sedan</option>
+        <option value="suv">SUV</option>
+        <option value="sports">Sports</option>
+      </select>
+      <label for="color">Color:</label>
+      <select id="color" class="t">
+        <!-- Add your color options here -->
+        <option value="red">Red</option>
+        <option value="blue">Blue</option>
+        <option value="green">Green</option>
+        <!-- Add more color options as needed -->
+      </select>
+      <input
+        type="file"
+        id="carImage"
+        accept="image/*"
+        required
+        class="ci"
+      />
+      <button type="submit" class="submit" onclick="registerCar()">
+        Register
+      </button>
+    </form>
+  </div>
+</div>
+
 
     <div id="searchContent" class="content" style="display: none">
       <div class="container">
