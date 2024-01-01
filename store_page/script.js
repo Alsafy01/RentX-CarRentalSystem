@@ -294,34 +294,33 @@ function saveFilters() {
   const pricePerDayFilter = document.querySelector('[name="price_per_day"]').value;
   const selectedBodyShapes = Array.from(document.querySelectorAll('[name="body_shape"]:checked')).map(checkbox => checkbox.value);
   const selectedColors = Array.from(document.querySelectorAll('[name="color"]:checked')).map(checkbox => checkbox.value);
+  
+  // Prepare data to send to the server
+  const filtersData = {
+    carIdFilter,
+    selectedBrands,
+    selectedYear,
+    selectedStatus,
+    pricePerDayFilter,
+    selectedBodyShapes,
+    selectedColors
+  };
 
-
-  // Apply filters separately and store the results
-  const filteredCarId = carIdFilter ? cardData.filter(card => card.plate_id.toLowerCase().includes(carIdFilter)) : cardData;
-  console.log("Filtered by Plate ID:", filteredCarId);
-
-  const filteredBrands = selectedBrands.length > 0 ? filteredCarId.filter(card => selectedBrands.includes(card.brand)) : filteredCarId;
-  console.log("Filtered by Brands:", filteredBrands);
-
-  const filteredYear = selectedYear ? filteredBrands.filter(card => card.year == selectedYear) : filteredBrands;
-  console.log("Filtered by Year:", filteredYear);
-
-  const filteredStatus = selectedStatus ? filteredYear.filter(card => card.status === selectedStatus) : filteredYear;
-  console.log("Filtered by Status:", filteredStatus);
-
-  const filteredPricePerDay = pricePerDayFilter ? filteredStatus.filter(card => card.price_per_day <= pricePerDayFilter) : filteredStatus;
-  console.log("Filtered by Price Per Day:", filteredPricePerDay);
-
-  const filteredBodyShapes = selectedBodyShapes.length > 0 ? filteredPricePerDay.filter(card => selectedBodyShapes.includes(card.body_shape)) : filteredPricePerDay;
-  console.log("Filtered by Body Shapes:", filteredBodyShapes);
-
-  const filteredColors = selectedColors.length > 0 ? filteredBodyShapes.filter(card => selectedColors.includes(card.color)) : filteredBodyShapes;
-  console.log("Filtered by Colors:", filteredColors);
-
-
+  // Send AJAX request to the PHP file
+  const xhr = new XMLHttpRequest();
+  xhr.open('POST', 'filterCars.php', true);
+  xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState == 4) {
+        if (xhr.status == 200) {
+            const cars = JSON.parse(xhr.responseText);
+            console.log(cars);
+			renderCards(cars);
+        }
+    }
+  
   // After filtering, you can update the UI with the merged result
   closeFilterSettings();
-  renderCards(filteredColors);
   // Clear form inputs
   const formInputs = document.querySelectorAll(
     'input[type="text"], input[type="checkbox"], input[type="radio"], input[type="range"]'
@@ -333,7 +332,10 @@ function saveFilters() {
       input.value = '';
     }
   });
-  
+};
+
+  // Convert the filtersData object to JSON and send it
+  xhr.send(JSON.stringify(filtersData));
 }
 
 
@@ -446,7 +448,27 @@ function loadNotifications() {
 function handleNotificationClick(card) {
   // Handle the click event for the notification item
   // You can navigate to a specific page or perform any other action
-  console.log(`Clicked on ${card.name} (ID: ${card.reservationId})`);
+  $.ajax({
+    url: "../login/checkLoginAdmin.php", // Create a new PHP file for checking login status
+    type: "GET",
+    success: function (response) {
+        if (response === "true") { 
+          
+          fetch('handelReservation.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json', // Set content type to JSON
+            },
+            body: JSON.stringify({ variable: card.reservationId }), // Convert variable to JSON and send in the request body
+        })
+        .then(response => response.json())
+        
+        } else {
+          console.log(`Clicked on ${card.name} (ID: ${card.reservationId})`);
+        }
+    }
+}); 
+
   // Add your logic here
 }
 

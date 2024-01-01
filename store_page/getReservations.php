@@ -21,7 +21,7 @@ if ($conn->connect_error) {
 }
 
 // Use prepared statement to prevent SQL injection
-$sql = "SELECT Cars.*, reservations.reservation_id
+$sql = "SELECT Cars.brand, Cars.price_per_day, Cars.car_image, reservations.reservation_id, reservations.status
         FROM Cars
         INNER JOIN reservations ON Cars.car_id = reservations.car_id
         WHERE reservations.customer_id = ?";
