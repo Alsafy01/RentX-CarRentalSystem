@@ -36,7 +36,7 @@
     <div id="registerCarContent" class="content" style="display: block">
   <div class="container">
     <label class="title">RegisterCar</label>
-    <form id="carRegistrationForm">
+		<form id="carRegistrationForm">
       <input
         type="text"
         id="model"
@@ -51,13 +51,14 @@
         required
         class="m"
       />
-      <input
-        type="text"
-        id="year"
-        placeholder="Year"
-        required
-        class="y"
-      />
+      <select id="year" required class="y">
+  <option value="" disabled selected>Select Year</option>
+  <!-- Add manually or use a script to generate the range of years -->
+  <option value="2022">2022</option>
+  <option value="2023">2023</option>
+  <option value="2024">2024</option>
+  <!-- Add more years as needed -->
+</select>
       <input
         type="text"
         id="plateId"
@@ -98,7 +99,7 @@
         required
         class="ci"
       />
-      <button type="submit" class="submit" onclick="registerCar()">
+      <button  class="submit" onclick="registerCar()">
         Register
       </button>
     </form>
@@ -178,7 +179,7 @@
       </div>
     </div>
 	
-	
+	<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="admin.js"></script>
   </body>
 </html>

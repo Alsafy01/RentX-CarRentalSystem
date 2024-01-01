@@ -392,6 +392,7 @@ function handleNotificationClick(card) {
   // Add your logic here
 }
 
+
 function login() {
   // Navigate to the login page
   window.location.href = "../login/login.html"; // Update the path accordingly
@@ -422,26 +423,6 @@ function logout() {
 function checkUserLoggedIn() {
 	console.log("checkUserLoggedIn: ",flag);
 	return flag; // Change this to true if the user is logged in
-}
-// Assume there's a function to check if the user is an admin
-function isAdmin() {
-    // Assuming you have jQuery included in your project
-    $.ajax({
-      url: "../login/checkLoginAdmin.php", // Create a new PHP file for checking login status
-      type: "GET",
-      success: function (response) {
-          if (response === "true") { 
-            flagA = true;
-            return flagA;
-          } else {
-              flagA = false;
-              return flagA;
-          }
-      }
-  }); 
-
-  return flagA; // The user is not logged in
-  
 }
 
 
@@ -540,6 +521,27 @@ function checkLoginStatus() {
         }
     });
 }
+// Assume there's a function to check if the user is an admin
+function isAdmin() {
+    // Assuming you have jQuery included in your project
+    $.ajax({
+      url: "../login/checkLoginAdmin.php", // Create a new PHP file for checking login status
+      type: "GET",
+      success: function (response) {
+          if (response === "true") { 
+            flagA = true;
+            return flagA;
+          } else {
+              flagA = false;
+              return flagA;
+          }
+      }
+  }); 
+
+  return flagA; // The user is not logged in
+  
+}
+
 
 // Call the function when the page loads
 $(document).ready(function () {
