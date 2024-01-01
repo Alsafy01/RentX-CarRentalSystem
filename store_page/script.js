@@ -1,5 +1,6 @@
 var flag = false;
 var flagA = false;
+var ID = 0;
 
 
 function openFilterSettings() {
@@ -174,6 +175,59 @@ fetch('fetchData.php')
 	})
 }
 
+var reserves=[];
+
+function fetchReservations() {
+  // Assuming ID is a global variable
+  
+  
+  $.ajax({
+    url: "../login/checkLoginAdmin.php", // Create a new PHP file for checking login status
+    type: "GET",
+    success: function (response) {
+        if (response === "true") { 
+                  fetch('getAllReservations.php')
+                  .then(response => response.json())
+                  .then(reserved => {
+                      reserves = reserved;
+                      console.log(reserved);
+                  })
+
+        } 
+        else {
+          $.ajax({
+            url: "../login/ID.php", // Create a new PHP file for checking login status
+            type: "GET",
+            success: function (response) {
+                if (response >0) {
+                    variableToSend = response;
+                    console.log(variableToSend);
+                    fetch('getReservations.php', {
+                      method: 'POST',
+                      headers: {
+                          'Content-Type': 'application/json', // Set content type to JSON
+                      },
+                      body: JSON.stringify({ variable: variableToSend }), // Convert variable to JSON and send in the request body
+                  })
+                  .then(response => response.json())
+                  .then(reserved => {
+                      reserves = reserved;
+                      console.log(reserved);
+                  })
+                    
+                } 
+            }
+        });
+        }
+    }
+}); 
+  
+  
+ 
+  
+
+}
+fetchReservations();
 
 
 
@@ -192,8 +246,7 @@ function renderCards(cards) {
         <div class="card-title">${cardData.brand} ${cardData.model}</div>
         <div class="card-subtitle">${cardData.year} | Plate ID: ${
           cardData.plate_id
-        } | Status: ${cardData.status} | Color: ${
-          cardData.color}</div>
+        } | Status: ${cardData.status}</div>
         <hr class="card-divider">
         <div class="card-footer">
             <div class="card-price" style="background-color: ${
@@ -248,7 +301,7 @@ function saveFilters() {
   const selectedBodyShapes = Array.from(document.querySelectorAll('[name="body_shape"]:checked')).map(checkbox => checkbox.value);
   const selectedColors = Array.from(document.querySelectorAll('[name="color"]:checked')).map(checkbox => checkbox.value);
   
-// Prepare data to send to the server
+  // Prepare data to send to the server
   const filtersData = {
     carIdFilter,
     selectedBrands,
@@ -290,7 +343,7 @@ function saveFilters() {
   // Convert the filtersData object to JSON and send it
   xhr.send(JSON.stringify(filtersData));
 }
-
+  
 
 
 
@@ -325,25 +378,25 @@ window.onclick = function (event) {
   }
 }
 
-const reserves = [
-  {
-    name: "Toyota",
-    price: 1000,
-    reservationId: 48,
-    status: "reserved",
-    imageUrl:
-      "https://png.pngtree.com/png-clipart/20210725/original/pngtree-car-gray-transportation-reception-sports-car-png-image_6561593.png",
-  },
-  {
-    name: "Ford",
-    price: 500,
-    reservationId: 32,
-    status: "picked_up",
-    imageUrl:
-      "https://png.pngtree.com/png-clipart/20210725/original/pngtree-mobility-tool-for-car-transportation-png-image_6561561.png",
-  },
-  // Add more card data as needed
-];
+//const reserves = [
+//  {
+//    name: "Toyota",
+//    price: 1000,
+//    reservationId: 48,
+//    status: "reserved",
+//    imageUrl:
+//      "https://png.pngtree.com/png-clipart/20210725/original/pngtree-car-gray-transportation-reception-sports-car-png-image_6561593.png",
+//  },
+//  {
+//    name: "Ford",
+//    price: 500,
+//    reservationId: 32,
+//    status: "picked_up",
+//    imageUrl:
+//      "https://png.pngtree.com/png-clipart/20210725/original/pngtree-mobility-tool-for-car-transportation-png-image_6561561.png",
+//  },
+//  // Add more card data as needed
+//];
 
 function loadNotifications() {
   const dropdown = document.getElementById("notificationDropdown");
@@ -361,6 +414,10 @@ function loadNotifications() {
     const icon = document.createElement("div");
     icon.className = "notification-icon";
     icon.style.backgroundImage = `url(${card.imageUrl})`;
+
+  
+
+
     carInfoContainer.appendChild(icon);
 
     // Car ID and name
@@ -401,7 +458,6 @@ function handleNotificationClick(card) {
   // Add your logic here
 }
 
-
 function login() {
   // Navigate to the login page
   window.location.href = "../login/login.html"; // Update the path accordingly
@@ -432,6 +488,26 @@ function logout() {
 function checkUserLoggedIn() {
 	console.log("checkUserLoggedIn: ",flag);
 	return flag; // Change this to true if the user is logged in
+}
+// Assume there's a function to check if the user is an admin
+function isAdmin() {
+    // Assuming you have jQuery included in your project
+    $.ajax({
+      url: "../login/checkLoginAdmin.php", // Create a new PHP file for checking login status
+      type: "GET",
+      success: function (response) {
+          if (response === "true") { 
+            flagA = true;
+            return flagA;
+          } else {
+              flagA = false;
+              return flagA;
+          }
+      }
+  }); 
+
+  return flagA; // The user is not logged in
+  
 }
 
 
@@ -480,7 +556,7 @@ if (!isLoggedIn) {
 // Append the "Reservations" button to the container
 	authButtonsContainer.appendChild(reservationsButton);
 	authButtonsContainer.appendChild(notificationDropdown);
-
+	
 	// Check if the user is an admin
   $.ajax({
     url: "../login/checkLoginAdmin.php", // Create a new PHP file for checking login status
@@ -530,31 +606,32 @@ function checkLoginStatus() {
         }
     });
 }
-// Assume there's a function to check if the user is an admin
-function isAdmin() {
-    // Assuming you have jQuery included in your project
-    $.ajax({
-      url: "../login/checkLoginAdmin.php", // Create a new PHP file for checking login status
+
+
+function getID() {
+  // Assuming you have jQuery included in your project
+  $.ajax({
+      url: "../login/ID.php", // Create a new PHP file for checking login status
       type: "GET",
       success: function (response) {
-          if (response === "true") { 
-            flagA = true;
-            return flagA;
+          if (response >0) {
+              ID = response;
+              console.log(ID);
+              
           } else {
-              flagA = false;
-              return flagA;
+            ID = response;
+            console.log(ID);
+          
           }
       }
-  }); 
-
-  return flagA; // The user is not logged in
-  
+  });
 }
-
 
 // Call the function when the page loads
 $(document).ready(function () {
-    checkLoginStatus();
+  getID(); 
+  checkLoginStatus();
+  
 	// Initial render when the page loads
 	// Attach click event to logout button
     $("#logoutButton").click(function () {

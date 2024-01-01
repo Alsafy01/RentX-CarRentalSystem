@@ -26,11 +26,16 @@ if ($admin === 'true'){
     // TODO: Use prepared statements to prevent SQL injection
     $sql = "SELECT * FROM admins WHERE email = '$email' AND password = '$password'";
     $result = $conn->query($sql);
+    
+
+
 
     if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
         // Authentication successful
         $_SESSION['loggedin'] = true;  // Set a session variable to indicate user is logged in
         $_SESSION['admin'] = true;
+        $_SESSION['ID'] = intval($row['admin_id']);
 
         $conn->close();
         header("Location: ../store_page/rent.html"); // Redirect to rent.html
@@ -48,10 +53,12 @@ if ($admin === 'true'){
     // TODO: Use prepared statements to prevent SQL injection
     $sql = "SELECT * FROM customers WHERE email = '$email' AND password = '$password'";
     $result = $conn->query($sql);
-
+    
     if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
         // Authentication successful
         $_SESSION['loggedin'] = true;  // Set a session variable to indicate user is logged in
+        $_SESSION['ID'] = intval($row['customer_id']);
 
         $conn->close();
         header("Location: ../store_page/rent.html"); // Redirect to rent.html
