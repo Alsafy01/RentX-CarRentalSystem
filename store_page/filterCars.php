@@ -20,8 +20,8 @@ if (!empty($data)) {
     $whereConditions = array();
 
     if (!empty($data['carIdFilter'])) {
-        $whereConditions[] = "plate_id = '" . $data['carIdFilter'] . "'";
-    }
+		$whereConditions[] = "plate_id LIKE '%" . $data['carIdFilter'] . "%'";
+	}
 
     if (!empty($data['selectedBrands'])) {
         $whereConditions[] = "brand IN ('" . implode("','", $data['selectedBrands']) . "')";

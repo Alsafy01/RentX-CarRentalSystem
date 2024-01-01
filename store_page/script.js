@@ -171,6 +171,7 @@ fetch('fetchData.php')
 	.then(response => response.json())
 	.then(fetchedData => {
 	  cardData = fetchedData
+	  console.log(cardData);
 	  renderCards(fetchedData); // Update the global variable with the fetched data
 	})
 }
@@ -262,10 +263,10 @@ function renderCards(cards) {
       addButton.addEventListener("click", function () {
 		  // flag = false the user isn't logged in navigate to login
 		  // flag = true the user logged in navigate to check out 
-		  if(!flag){
-        addToCards(cardData.brand + " " + cardData.model, cardData.price_per_day);
+		  if(flag){
+        addToCards(cardData.brand + " " + cardData.model, cardData.price_per_day, cardData.car_id);
 		  }else{
-			  
+			  window.location.href = `../login/login.html`;
 		  }
       });
   
@@ -350,11 +351,28 @@ function saveFilters() {
 let originalCardsData = cardData.slice(); // Create a copy of the original data
 
 
-function addToCards(cardName, cardPrice) {
-  window.location.href = `../checkout/checkout.html?name=${encodeURIComponent(
-    cardName
-  )}&price=${encodeURIComponent(cardPrice)}`;
+// Declare a global variable to store ID
+var globalID;
+
+function addToCards(cardName, cardPrice, carId) {
+    // Set the global variable
+     // Assuming you have jQuery included in your project
+  $.ajax({
+      url: "../login/ID.php", // Create a new PHP file for checking login status
+      type: "GET",
+      success: function (response) {
+          if (response >0) {
+              globalID = response;
+              console.log(ID);
+              window.location.href = `../checkout/checkout.html?name=${encodeURIComponent(
+        cardName
+    )}&price=${encodeURIComponent(cardPrice)}&carId=${encodeURIComponent(carId)}&globalID=${encodeURIComponent(globalID)}`;
+          } else {
+          }
+      }
+  });
 }
+
 
 function toggleDropdown() {
   var dropdown = document.getElementById("notificationDropdown");
@@ -473,7 +491,6 @@ function signup() {
   window.location.href = "../login/signup.html"; // Update the path accordingly
 }
 
-// Logout function
 function logout() {
     $.ajax({
         url: "../login/logout.php", // Create a new PHP file for handling logout
@@ -484,6 +501,7 @@ function logout() {
         }
     });
 }
+
 
 function checkUserLoggedIn() {
 	console.log("checkUserLoggedIn: ",flag);

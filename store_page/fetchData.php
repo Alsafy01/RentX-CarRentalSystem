@@ -18,6 +18,7 @@ $cardsData = array();
 if ($result->num_rows > 0) {
     while($row = $result->fetch_assoc()) {
         $carData = array(
+			'car_id' => $row['car_id'],
             'brand' => $row['brand'],
             'model' => $row['model'],
             'plate_id' => $row['plate_id'],
