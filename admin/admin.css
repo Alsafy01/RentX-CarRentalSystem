@@ -91,18 +91,6 @@ form {
   gap: 10px;
   margin-top: 10px;
 }
-.container {
-  width: 300px;
-  background: rgb(255, 250, 235);
-  box-shadow: 0px 187px 75px rgba(0, 0, 0, 0.01),
-    0px 105px 63px rgba(0, 0, 0, 0.05), 0px 47px 47px rgba(0, 0, 0, 0.09),
-    0px 12px 26px rgba(0, 0, 0, 0.1), 0px 0px 0px rgba(0, 0, 0, 0.1);
-  display: grid;
-  grid-template-columns: auto;
-  gap: 10px;
-  margin-left: 37%;
-  margin-top: 100px;
-}
 .m {
   width: auto;
   height: 36px;
@@ -366,11 +354,65 @@ form {
   background-color: rgb(251, 243, 228);
   transition: all 0.3s cubic-bezier(0.15, 0.83, 0.66, 1);
 }
-/* Styles for report results display */
-#reportResults {
-  /* Add styles for the report results display container if needed */
+.terminal {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    
+    height: 150px;
+    background-color: #f8f9fa;
+    padding: 10px;
+    box-sizing: border-box;
+    color: #333;
+    font-family: 'Courier New', monospace;
+    border-radius: 8px;
+    margin-top: 20px;
+    z-index: 1;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
 }
-/* Styles for report results display */
-#results {
-  /* Add styles for the report results display container if needed */
+
+#logTerminal {
+    font-family: 'Courier New', monospace;
+    border: 1px solid #ccc;
+    background-color: #f8f8f8;
+    overflow-y: scroll;
+    flex-grow: 1;
+    border-radius: 8px;
+    box-sizing: border-box;
+    color: white;
+    margin-right: 10px;
+    width: 700px; /* Set the maximum width as needed */
+    height: 130px; /* Set the maximum height as needed */
+}
+
+.button-container {
+    display: flex;
+    z-index: 2;
+}
+
+#registerCarContent {
+    margin-bottom: 200px;
+}
+
+.content {
+    margin-bottom: 20px;
+}
+
+.container {
+    width: 300px;
+    background: rgb(255, 250, 235);
+    box-shadow: 0px 187px 75px rgba(0, 0, 0, 0.01),
+        0px 105px 63px rgba(0, 0, 0, 0.05), 0px 47px 47px rgba(0, 0, 0, 0.09),
+        0px 12px 26px rgba(0, 0, 0, 0.1), 0px 0px 0px rgba(0, 0, 0, 0.1);
+    display: grid;
+    grid-template-columns: auto;
+    gap: 10px;
+    margin-left: 37%;
+    margin-top: 100px;
+    z-index: 2;
 }

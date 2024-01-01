@@ -1,3 +1,5 @@
+var logTerminal = document.getElementById("logTerminal");
+
 function openFilterSettings() {
   var filterDropdown = document.getElementById("actionType");
   if (filterDropdown.style.display === "none") {
@@ -155,4 +157,45 @@ function registerCar() {
             // Handle error response from the server
         }
     });
+}
+
+
+function addLogToTerminal(log, color = null) {
+    const logTerminal = document.getElementById("logTerminal");
+    
+    // Set the text color if the color argument is provided
+    if (color !== null) {
+        logTerminal.innerHTML += `<span style="color: ${color};font-weight: bold;">${log}</span>\n`;
+    } else {
+        // Default color is black
+        logTerminal.innerHTML += `<span style="color: black;font-weight: bold;">${log}</span>\n`;
+    }
+}
+
+
+document.getElementById("downloadButton").addEventListener("click", downloadLogs);
+
+function downloadLogs() {
+    const logTerminal = document.getElementById("logTerminal");
+
+    // Default file format is "txt"
+    const format = "txt";
+
+    const logs = logTerminal.innerText;
+
+    // Create a Blob containing the logs
+    const blob = new Blob([logs], { type: `text/${format}` });
+
+    // Create a link element to trigger the download
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = `logs.${format}`;
+    link.style.display = "none";
+
+    // Append the link to the terminal container and trigger the download
+    document.getElementById("terminalContainer").appendChild(link);
+    link.click();
+
+    // Remove the link from the terminal container
+    document.getElementById("terminalContainer").removeChild(link);
 }
