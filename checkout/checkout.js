@@ -7,6 +7,7 @@ const priceLabelElement = document.querySelector(".checkout .footer .price");
 
 const carName = urlParams.get("name") || "N/A";
 const carPrice = urlParams.get("price") ? `$${parseFloat(urlParams.get("price")).toFixed(2)}` : "N/A";
+var totalPrice = carPrice;
 
 // Retrieve the additional parameters
 const carId = urlParams.get("carId") || "N/A";
@@ -18,10 +19,11 @@ console.log("Global ID:", globalID);
 
 carNameElement.textContent = carName;
 carPriceElement.textContent = carPrice;
-priceLabelElement.textContent = carPrice;
+priceLabelElement.textContent = totalPrice;
 
 // Add event listener for return date change
 document.getElementById("returndate").addEventListener("change", proceedCheckout);
+const params = new URLSearchParams();
 
 function proceedCheckout() {
   const queryString = window.location.search;
@@ -37,21 +39,39 @@ function proceedCheckout() {
   const pickupDate = document.getElementById("pickdate").value;
   const returnDate = document.getElementById("returndate").value;
 
-  // Calculate the price based on the dates
-  const daysDifference = Math.ceil((new Date(returnDate) - new Date(pickupDate)) / (1000 * 60 * 60 * 24));
-  const calculatedPrice = originalPrice * daysDifference;
-
   // Construct URL with all card details as query parameters
-  const params = new URLSearchParams();
+
   params.append("name", carName);
-  params.append("price", calculatedPrice); // Assign the calculated price
+  params.append("price", totalPrice); // Assign the calculated price
   params.append("mainPrice", originalPrice); // Assign the calculated price
   params.append("bodyType", bodyType);
   params.append("imageUrl", imageUrl);
+  
 
-  window.location.href = `checkout.html?${params.toString()}`;
 }
 
+function updateTotalPrice() {
+	const originalPrice = parseFloat(urlParams.get("price")) || 0; // Parse price as float
+	
+	const pickupDateValue = document.getElementById('pickdate').value;
+    const returnDateValue = document.getElementById('returndate').value;
+
+	// Calculate the price based on the dates
+	const returnDate = new Date(returnDateValue);
+	const pickupDate = new Date(pickupDateValue);
+
+	const daysDiff = Math.ceil((new Date(returnDate) - new Date(pickupDate)) / (1000 * 60 * 60 * 24));
+	
+	totalPrice = originalPrice * daysDiff;
+
+	console.log('Total Price:', totalPrice); // You can adjust this based on how you want to handle the total price
+	// Update the label with the new total price
+	if(pickupDateValue && returnDateValue){
+		const priceLabel = document.querySelector('.price');
+		priceLabel.textContent = `$${totalPrice}`;
+	}
+}
+	
 // Function to toggle payment fields based on selected payment method
 function togglePaymentFields() {
   var selectedPayment = document.getElementById('pay').value;
@@ -67,3 +87,15 @@ function togglePaymentFields() {
     document.getElementById('paypalInput').style.display = 'block';
   }
 }
+
+document.getElementById('pickdate').addEventListener('change', function () {
+	const pickupDate = this.value;
+	document.getElementById('returndate').min = pickupDate;
+	updateTotalPrice(); // Call the function to update total price
+});
+
+document.getElementById('returndate').addEventListener('change', function () {
+	const returnDate = this.value;
+	document.getElementById('pickdate').max = returnDate;
+	updateTotalPrice(); // Call the function to update total price
+});
