@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <title>CheckOut</title>
     <meta charset="utf-8" />
@@ -37,26 +37,27 @@
             <hr />
             <div class="payments">
               <span>PAYMENT</span>
-			  <select id="pay" class="location_field" onchange="togglePaymentFields()">
-    <option value="chash">Cash</option>
-    <option value="credit_card">Credit Card</option>
-    <option value="paypal">PayPal</option>
-</select>
+              <select id="pay" class="location_field" onchange="togglePaymentFields()">
+                <option value="cash">Cash</option>
+                <option value="credit_card">Credit Card</option>
+                <option value="paypal">PayPal</option>
+              </select>
 
-<div id="creditCardInput" style="display: none;">
-    <label for="creditCardNumber">Credit Card Number (Last 4 digits):</label>
-    <input type="text" id="creditCardNumber" maxlength="4">
-</div>
+              <div id="creditCardInput" style="display: none;">
+                <label for="creditCardNumber">Credit Card Number (Last 4 digits):</label>
+                <input type="text" id="creditCardNumber" maxlength="4">
+              </div>
 
-<div id="paypalInput" style="display: none;">
-    <label for="paypalNumber">PayPal Transfer No.:</label>
-    <input type="text" id="paypalNumber" maxlength="11">
-</div>
+              <div id="paypalInput" style="display: none;">
+                <label for="paypalNumber">PayPal Transfer No.:</label>
+                <input type="text" id="paypalNumber" maxlength="11">
+              </div>
+
               <div class="details">
-                <span>car model</span>
-                <span></span>
-                <span>price</span>
-                <span></span>
+                <span>Car Model</span>
+                <span id="carModelPrice"></span>
+                <span>Main Price</span>
+                <span id="mainPrice"></span>
               </div>
             </div>
           </div>
