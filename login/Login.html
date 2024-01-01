@@ -1,6 +1,29 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <script>
+      function check_admin() {
+        var form = document.querySelector('.form'); // Add this line to reference the form element
+
+        var email = document.getElementById("email").value.trim();
+      
+        if (email[0] == ('#')) {
+          const adminInput = document.createElement('input');
+          adminInput.type = 'hidden';
+          adminInput.name = 'admin';
+          adminInput.value = 'true';
+          form.appendChild(adminInput);
+        } else {
+          const adminInput = document.createElement('input');
+          adminInput.type = 'hidden';
+          adminInput.name = 'admin';
+          adminInput.value = 'false';
+          form.appendChild(adminInput);
+        }
+
+        return true;
+      }
+    </script>
     <title>Login</title>
     <link rel="stylesheet" href="loginStyle.css" />
   </head>
@@ -8,12 +31,12 @@
   <body>
     <div class="container">
       <div class="top-bar">
-  <a href="../index.html" class="back-arrow">&#9664;</a>
-</div>
+        <a href="../index.html" class="back-arrow">&#9664;</a>
+      </div>
 
       <div class="heading">Sign In</div>
 
-      <form action="checkCredentials.php" method="POST" class="form">
+      <form action="checkCredentials.php" method="POST" onsubmit="return check_admin()" class="form">
         <input
           required=""
           class="input"
@@ -46,6 +69,6 @@
         Don't have an account? <a href="signup.html">Sign Up</a>
       </div>
     </div>
-	<script type="module" src="loginScript.js"> </script>
+    <script type="module" src="loginScript.js"> </script>
   </body>
 </html>

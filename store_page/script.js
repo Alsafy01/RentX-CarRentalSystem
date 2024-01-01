@@ -1,4 +1,5 @@
 var flag = false;
+var flagA = false;
 
 
 function openFilterSettings() {
@@ -424,9 +425,25 @@ function checkUserLoggedIn() {
 }
 // Assume there's a function to check if the user is an admin
 function isAdmin() {
-	
-	return true; // Change this to false if the user is not an admin
+    // Assuming you have jQuery included in your project
+    $.ajax({
+      url: "../login/checkLoginAdmin.php", // Create a new PHP file for checking login status
+      type: "GET",
+      success: function (response) {
+          if (response === "true") { 
+            flagA = true;
+            return flagA;
+          } else {
+              flagA = false;
+              return flagA;
+          }
+      }
+  }); 
+
+  return flagA; // The user is not logged in
+  
 }
+
 
 // Function to render or hide login/signup buttons based on user login status
 function renderAuthButtons() {
@@ -435,6 +452,7 @@ const authButtonsContainer = document.getElementById("authButtons");
 // Check if the user is logged in
 const isLoggedIn = checkUserLoggedIn();
 console.log("renderAuthButtons: ",isLoggedIn);
+
 // Clear existing buttons
 authButtonsContainer.innerHTML = "";
 
@@ -472,19 +490,26 @@ if (!isLoggedIn) {
 // Append the "Reservations" button to the container
 	authButtonsContainer.appendChild(reservationsButton);
 	authButtonsContainer.appendChild(notificationDropdown);
-		
+
 	// Check if the user is an admin
-	if (isAdmin()) {
-		// If the user is an admin, render the "Debug" button
-		const debugButton = document.createElement("button");
-		debugButton.textContent = "Debug";
-		debugButton.className = "filter";
-		debugButton.style = "background: none; color: white";
-		debugButton.addEventListener("click", debug);
-		
-		// Append the "Debug" button to the container
-		authButtonsContainer.appendChild(debugButton);
-	}
+  $.ajax({
+    url: "../login/checkLoginAdmin.php", // Create a new PHP file for checking login status
+    type: "GET",
+    success: function (response) {
+        if (response === "true") { 
+            // If the user is an admin, render the "Debug" button
+            const debugButton = document.createElement("button");
+            debugButton.textContent = "Debug";
+            debugButton.className = "filter";
+            debugButton.style = "background: none; color: white";
+            debugButton.addEventListener("click", debug);
+            
+            // Append the "Debug" button to the container
+            authButtonsContainer.appendChild(debugButton);
+        } 
+    }
+}); 
+ 
 	const logoutButton = document.createElement("button");
 	logoutButton.textContent = "logout";
 	logoutButton.className = "filter";
