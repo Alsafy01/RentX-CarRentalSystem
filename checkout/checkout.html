@@ -44,20 +44,6 @@
               <p></p>
               <input
                 type="text"
-                name="email"
-                id="Email"
-                placeholder="Enter Email"
-              />
-              <p></p>
-              <input
-                type="password"
-                name="password"
-                id="pass"
-                placeholder="Enter Password"
-              />
-              <p></p>
-              <input
-                type="text"
                 name="phonenumber"
                 id="phone"
                 placeholder="phonenumber"
@@ -66,6 +52,21 @@
             <hr />
             <div class="payments">
               <span>PAYMENT</span>
+			  <select id="pay" class="location_field" onchange="togglePaymentFields()">
+    <option value="chash">Cash</option>
+    <option value="credit_card">Credit Card</option>
+    <option value="paypal">PayPal</option>
+</select>
+
+<div id="creditCardInput" style="display: none;">
+    <label for="creditCardNumber">Credit Card Number (Last 4 digits):</label>
+    <input type="text" id="creditCardNumber" maxlength="4">
+</div>
+
+<div id="paypalInput" style="display: none;">
+    <label for="paypalNumber">PayPal Transfer No.:</label>
+    <input type="text" id="paypalNumber" maxlength="11">
+</div>
               <div class="details">
                 <span>car model</span>
                 <span></span>
