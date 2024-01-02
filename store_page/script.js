@@ -233,49 +233,58 @@ fetchReservations();
 
 
 function renderCards(cards) {
-    const cardsContainer = document.getElementById("cardsContainer");
-    cardsContainer.innerHTML = "";
-  
-    cards.forEach((cardData) => {
+  const cardsContainer = document.getElementById("cardsContainer");
+  cardsContainer.innerHTML = "";
+
+  cards.forEach((cardData) => {
       const card = document.createElement("div");
       card.className = "card";
-  
+
       card.innerHTML = `
-        <div class="card-img" style="background-image: url(${
+      <div class="card-img" style="background-image: url(${
           cardData.car_image
-        });"></div>
-        <div class="card-title">${cardData.brand} ${cardData.model}</div>
-        <div class="card-subtitle">${cardData.year} | Plate ID: ${
+      });"></div>
+      <div class="card-title">${cardData.brand} ${cardData.model}</div>
+      <div class="card-subtitle">${cardData.year} | Plate ID: ${
           cardData.plate_id
-        } | Status: ${cardData.status}</div>
-        <hr class="card-divider">
-        <div class="card-footer">
-            <div class="card-price" style="background-color: ${
+      } | Status: ${cardData.status}</div>
+      <hr class="card-divider">
+      <div class="card-footer">
+          <div class="card-price" style="background-color: ${
               cardData.status === "reserved" ? "lightyellow" : "lightgreen"
-            };"><span>$</span> <strong>${cardData.price_per_day.toFixed(2)}</strong></div>
-            <button class="card-btn">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="m397.78 316h-205.13a15 15 0 0 1 -14.65-11.67l-34.54-150.48a15 15 0 0 1 14.62-18.36h274.27a15 15 0 0 1 14.65 18.36l-34.6 150.48a15 15 0 0 1 -14.62 11.67zm-193.19-30h181.25l27.67-120.48h-236.6z"></path><path d="m222 450a57.48 57.48 0 1 1 57.48-57.48 57.54 57.54 0 0 1 -57.48 57.48zm0-84.95a27.48 27.48 0 1 0 27.48 27.47 27.5 27.5 0 0 0 -27.48-27.47z"></path><path d="m368.42 450a57.48 57.48 0 1 1 57.48-57.48 57.54 57.54 0 0 1 -57.48 57.48zm0-84.95a27.48 27.48 0 1 0 27.48 27.47 27.5 27.5 0 0 0 -27.48-27.47z"></path><path d="m158.08 165.49a15 15 0 0 1 -14.23-10.26l-25.71-77.23h-47.44a15 15 0 1 1 0-30h58.3a15 15 0 0 1 14.23 10.26l29.13 87.49a15 15 0 0 1 -14.23 19.74z"></path></svg>
-            </button>
-        </div>
-      `;
-  
+          };"><span>$</span> <strong>${cardData.price_per_day.toFixed(2)}</strong></div>
+          <button class="card-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="m397.78 316h-205.13a15 15 0 0 1 -14.65-11.67l-34.54-150.48a15 15 0 0 1 14.62-18.36h274.27a15 15 0 0 1 14.65 18.36l-34.6 150.48a15 15 0 0 1 -14.62 11.67zm-193.19-30h181.25l27.67-120.48h-236.6z"></path><path d="m222 450a57.48 57.48 0 1 1 57.48-57.48 57.54 57.54 0 0 1 -57.48 57.48zm0-84.95a27.48 27.48 0 1 0 27.48 27.47 27.5 27.5 0 0 0 -27.48-27.47z"></path><path d="m368.42 450a57.48 57.48 0 1 1 57.48-57.48 57.54 57.54 0 0 1 -57.48 57.48zm0-84.95a27.48 27.48 0 1 0 27.48 27.47 27.5 27.5 0 0 0 -27.48-27.47z"></path><path d="m158.08 165.49a15 15 0 0 1 -14.23-10.26l-25.71-77.23h-47.44a15 15 0 1 1 0-30h58.3a15 15 0 0 1 14.23 10.26l29.13 87.49a15 15 0 0 1 -14.23 19.74z"></path></svg>
+          </button>
+      </div>
+    `;
+
       const addButton = card.querySelector(".card-btn");
       addButton.addEventListener("click", function () {
-		  // flag = false the user isn't logged in navigate to login
-		  // flag = true the user logged in navigate to check out 
-		  if(flag){
-        addToCards(cardData.brand + " " + cardData.model, cardData.price_per_day, cardData.car_id);
-		  }else{
-			  window.location.href = `../login/login.html`;
-		  }
+          // flag = false the user isn't logged in navigate to login
+          // flag = true the user logged in navigate to check out 
+          if (flag) {
+              addToCards(cardData.brand + " " + cardData.model, cardData.price_per_day, cardData.car_id, cardData.status);
+          } else {
+              window.location.href = `../login/login.html`;
+          }
       });
-  
+
+      const carImage = card.querySelector(".card-img");
+      carImage.addEventListener("click", function () {
+          // Call the click_image function when the car image is clicked
+          click_image(cardData);
+      });
+
       cardsContainer.appendChild(card);
-    });
-  }
+  });
+}
+fetchData();
+
+
   
 
-fetchData();
+
 
 let filteredCards = []; // Store searched cars globally to perform the filter on them directly
 
@@ -354,16 +363,20 @@ let originalCardsData = cardData.slice(); // Create a copy of the original data
 // Declare a global variable to store ID
 var globalID;
 
-function addToCards(cardName, cardPrice, carId) {
+function addToCards(cardName, cardPrice, carId, status) {
     // Set the global variable
      // Assuming you have jQuery included in your project
-  $.ajax({
+
+     if (status === "active"){
+     $.ajax({
       url: "../login/ID.php", // Create a new PHP file for checking login status
       type: "GET",
       success: function (response) {
           if (response >0) {
               globalID = response;
               console.log(ID);
+              
+  
               window.location.href = `../checkout/checkout.html?name=${encodeURIComponent(
         cardName
     )}&price=${encodeURIComponent(cardPrice)}&carId=${encodeURIComponent(carId)}&globalID=${encodeURIComponent(globalID)}`;
@@ -371,6 +384,49 @@ function addToCards(cardName, cardPrice, carId) {
           }
       }
   });
+}else alert("Sorry you can't reserve this car for now :(");
+}
+
+
+// Function to handle the click event on the car image
+function click_image(cardData) {
+  
+  if (flag){
+  $.ajax({
+    url: "../login/checkLoginAdmin.php", // Create a new PHP file for checking login status
+    type: "GET",
+    success: function (response) {
+        if (response === "true") { 
+            // If the user is logged in
+            var userConfirmed = window.confirm("Do you want to update the status?");
+            if (userConfirmed) {
+            fetch('updateStatus.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json', // Set content type to JSON
+                },
+                body: JSON.stringify({ 
+                    car_id: cardData.car_id,
+                    status: cardData.status
+                }), // Convert cardData to JSON and send in the request body
+            })
+            
+            .then(data => {
+                // Handle the response from the server if needed
+                console.log(data);
+                fetchData();
+            })
+          }
+
+        } 
+    }
+});
+}
+ 
+
+  console.log("Car image clicked:", cardData);
+
+
 }
 
 
@@ -487,7 +543,7 @@ function handleNotificationClick(card) {
             body: JSON.stringify({ variable: card.reservationId }), // Convert variable to JSON and send in the request body
         })
         .then(response => response.json())
-        
+        fetchData();
         } else {
           console.log(`Clicked on ${card.name} (ID: ${card.reservationId})`);
         }
