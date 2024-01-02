@@ -181,8 +181,6 @@ function registerCar() {
         contentType: false,
         success: function(response) {
             console.log(response);
-            addLogToTerminal(response);
-            downloadLogs();
             // Handle success response from the server
         },
         error: function(error) {
@@ -205,6 +203,10 @@ function addLogToTerminal(log, color = null) {
     }
 }
 
+function clearTerminal() {
+    const logTerminal = document.getElementById("logTerminal");
+    logTerminal.innerHTML = ''; // Set the content to an empty string
+}
 
 document.getElementById("downloadButton").addEventListener("click", downloadLogs);
 
@@ -237,7 +239,6 @@ function downloadLogs() {
 
 
 function _openFilterSettings() {
-	console.log("fuck");
   var filterModal = document.getElementById("filterModal");
   filterModal.style.display = "flex";
 }
@@ -266,6 +267,7 @@ function closeFilterSettings() {
 }
 
 function saveFilters() {
+		 clearTerminal();
     // Get filter values from your HTML elements
     const carIdFilter = document.querySelector('[name="car_id"]').value.trim().toLowerCase();
     const selectedBrands = Array.from(document.querySelectorAll('[name="brand"]:checked')).map(checkbox => checkbox.value);
@@ -275,16 +277,33 @@ function saveFilters() {
     const selectedBodyShapes = Array.from(document.querySelectorAll('[name="body_shape"]:checked')).map(checkbox => checkbox.value);
     const selectedColors = Array.from(document.querySelectorAll('[name="color"]:checked')).map(checkbox => checkbox.value);
 
-    // Prepare data to send to the server
-    const filtersData = {
-        carIdFilter,
-        selectedBrands,
-        selectedYear,
-        selectedStatus,
-        pricePerDayFilter,
-        selectedBodyShapes,
-        selectedColors
-    };
+    // Additional customer information
+	const customerName = document.getElementById('customerName').value.trim();
+	const phone = document.getElementById('phone').value.trim();
+	const customerEmail = document.getElementById('customerEmail').value.trim();
+	const reservationDate = document.getElementById('reservationDate').value;
+
+	// Include reservation date, customer name, phone, and email in the filtersData object
+	const filtersData = {
+		carIdFilter,
+	selectedBrands,
+		selectedYear,
+	selectedStatus,
+		pricePerDayFilter,
+	selectedBodyShapes,
+		selectedColors,
+		customerName,
+		phone,
+		customerEmail,
+		reservationDate
+	};
+// Loop over each attribute in filtersData
+for (const key in filtersData) {
+    if (filtersData.hasOwnProperty(key)) {
+        const value = filtersData[key];
+            console.log(`${key}:`, value);
+    }
+}
 
     // Send an AJAX request to the PHP file
     $.ajax({
@@ -296,15 +315,42 @@ function saveFilters() {
         success: function(response) {
             // Handle the response and display results on the page
             if (response.length > 0) {
-                // Assuming you have a function to display the results, modify accordingly
-                console.log(response);
-            } else {
-                // No matching data found
-                console.log("No matching data found.");
-            }
+			console.log(response);
+        // Iterate through the array of objects
+        response.forEach((carData, index) => {
+            // Choose a color based on the index
+            const color = index % 2 === 0 ? 'green' : 'blue';
+            
+            // Create a log string from the carData object
+            const log = Object.keys(carData).map(key => `${key}: ${carData[key]}`).join(', ');
+
+            // Add the log to the terminal with the specified color
+            addLogToTerminal(log, color);
+        });
+		} else {
+			// No data received
+			addLogToTerminal("No matched data found.",'red');
+			console.log("No matched data found.");
+		}
         },
-        error: function(error) {
-            console.error("Error fetching filtered data:", error);
+        error: function (xhr, status, error) {
+            console.error("Error fetching filtered data:", xhr, status, error);
+        }
+    });
+
+    // After filtering, you can update the UI with the merged result
+    closeFilterSettings();
+
+    // Clear form inputs
+    const formInputs = document.querySelectorAll(
+        'input[type="text"], input[type="checkbox"], input[type="radio"], input[type="range"]'
+    );
+    formInputs.forEach((input) => {
+        if (input.type === 'checkbox' || input.type === 'radio') {
+            input.checked = false;
+        } else {
+            input.value = '';
         }
     });
 }
+

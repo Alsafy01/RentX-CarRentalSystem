@@ -131,20 +131,28 @@
             </div>
             <div id="customerInfoFields" style="display: none">
               <input
-                type="text"
-                id="customerName"
-                placeholder="Customer Name"
-              />
-              <input
-                type="text"
-                id="phone"
-                placeholder="Phone Number"
-              />
-              <input
-                type="text"
-                id="customerEmail"
-                placeholder="Customer Email"
-              />
+				type="text"
+				id="customerName"
+				placeholder="Customer Name"
+			/>
+
+			<input
+				type="tel"
+				id="phone"
+				placeholder="Phone Number"
+				class="t"
+				pattern="[\d\+\-\s]+"
+				title="Please enter a valid phone number"
+			/>
+
+			<input
+				type="email"  
+				id="customerEmail"
+				placeholder="Customer Email"
+				pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"  
+				title="Please enter a valid email address"
+			/>
+
             </div>
             <div id="reservationFields" style="display: none">
               <input
@@ -301,7 +309,7 @@
             </div>	
 
           
-		  <button type="button" id="advancedSearchButton" onclick="advancedSearch()">
+		  <button type="button" id="advancedSearchButton" onclick="saveFilters()">
             Search
           </button>
         </form>
