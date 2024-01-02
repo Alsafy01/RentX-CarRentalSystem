@@ -22,7 +22,7 @@ carPriceElement.textContent = carPrice;
 priceLabelElement.textContent = totalPrice;
 
 // Add event listener for return date change
-document.getElementById("returndate").addEventListener("change", proceedCheckout);
+//document.getElementById("returndate").addEventListener("change", proceedCheckout);
 const params = new URLSearchParams();
 
 function proceedCheckout() {
@@ -47,6 +47,39 @@ function proceedCheckout() {
   params.append("bodyType", bodyType);
   params.append("imageUrl", imageUrl);
   
+  const formData = new FormData();
+  formData.append("price", totalPrice); // Assign the calculated price
+  formData.append("customer_id", globalID);
+  formData.append("car_id", carId);
+  formData.append("pickupDate", pickupDate);
+  formData.append("returnDate", returnDate);
+
+  // Add the selected payment method to the formData
+  formData.append("payment_method", document.getElementById('pay').value);
+  formData.append("paypalnum", document.getElementById('paypalNumber').value);
+  formData.append("creditnum", document.getElementById('creditCardNumber').value);
+  formData.append("creditExp", document.getElementById('creditCardExp').value);
+  formData.append("location", document.getElementById('location').value);
+  
+  fetch("checkout.php", {
+    method: "POST",
+    body: formData,
+  })
+    .then(response => response.json())
+    .then(data => {
+      // Handle the response from PHP (if needed)
+      
+      console.log("Checkout response:", data);
+    })
+    .catch(error => {
+      // Handle errors
+      console.error("Error during checkout:", error);
+    });
+
+  window.location.href = `checkout.html?${params.toString()}`;
+
+
+
 
 }
 
@@ -99,3 +132,15 @@ document.getElementById('returndate').addEventListener('change', function () {
 	document.getElementById('pickdate').max = returnDate;
 	updateTotalPrice(); // Call the function to update total price
 });
+
+
+
+
+
+
+
+
+
+
+
+

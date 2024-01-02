@@ -36,71 +36,95 @@ $stmt->bind_param("i", $receivedID);
 // Execute the statement
 $stmt->execute();
 
-// Get the result
-$result = $stmt->get_result();
+// Bind the result variables
+$stmt->bind_result($status, $carId);
 
+// Fetch the result
+$stmt->fetch();
+$stmt->close();
 // Initialize an array to store car data
 
-if ($result->num_rows > 0) {
-    $row = $result->fetch_assoc()
-    
-    
-    
-    
-    if ( $row['status'] === "reserved"){
-       
-       $sql1 = "UPDATE reservations
-        SET status = 'picked_up'
-        WHERE reservation_id = ?";
 
-        // Prepare the statement
-        $stmt1 = $conn->prepare($sql1);
-
-        // Bind the parameter
-        $stmt1->bind_param("i", $receivedID);
-
-        // Execute the statement
-        $stmt1->execute();
-   }
-
-   
-   
-   elseif ($row['status'] === "picked_up"){
-    
-    $sql1 = "UPDATE car
-            SET status = 'active'
-            WHERE car_id = ? ";
+if ($status === "reserved") {
+    $sql3 = "UPDATE reservations
+             SET `status` = 'picked_up'
+             WHERE reservation_id = ?";
 
     // Prepare the statement
-    $stmt1 = $conn->prepare($sql1);
+    
 
+    if (!$conn->prepare($sql3)) {
+        die("Error in preparing statement: " . $conn->error);
+    }
+    $stmt3 = $conn->prepare($sql3);
     // Bind the parameter
-    $stmt1->bind_param("i", $row['car_id']);
+    $stmt3->bind_param("i", $receivedID);
 
     // Execute the statement
-    $stmt1->execute();
+    if (!$stmt3->execute()) {
+        die("Error in executing statement: " . $stmt3->error);
+    }
+
+    // Close the statement
+    $stmt3->close();
+}
 
 
-    $sql2 = "UPDATE reservations
-            SET status = 'returned'
+
+elseif ($status === "picked_up"){
+
+
+$sql3 = "UPDATE reservations
+            SET `status` = 'returned'
             WHERE reservation_id = ?";
 
-    // Prepare the statement
-    $stmt2 = $conn->prepare($sql1);
+// Prepare the statement
 
-    // Bind the parameter
-    $stmt2->bind_param("i", $receivedID);
 
-    // Execute the statement
-    $stmt2->execute();
+if (!$conn->prepare($sql3)) {
+    die("Error in preparing statement: " . $conn->error);
+}
+$stmt3 = $conn->prepare($sql3);
+// Bind the parameter
+$stmt3->bind_param("i", $receivedID);
 
-   }
+// Execute the statement
+if (!$stmt3->execute()) {
+    die("Error in executing statement: " . $stmt3->error);
 }
 
 // Close the statement
-$stmt->close();
-$stmt1->close();
-$stmt2->close();
+$stmt3->close();
+
+
+
+$sqlCar = "UPDATE Cars
+    SET `status` = 'active'
+    WHERE car_id = ? ";
+
+if (!$conn->prepare($sqlCar)) {
+    die("Error in preparing statement: " . $conn->error);
+}
+$stmtCar = $conn->prepare($sqlCar);
+// Bind the parameter
+$stmtCar->bind_param("i",$carId);
+
+// Execute the statement
+if (!$stmtCar->execute()) {
+    die("Error in executing statement: " . $stmtCar->error);
+}
+
+// Close the statement
+$stmtCar->close();
+
+
+}
+
+
+// Close the statement
+
+
+
 
 // Close the connection
 $conn->close();
