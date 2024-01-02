@@ -5,12 +5,13 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="admin.css" />
+	<link rel="stylesheet" href="../store_page/styles.css">
   </head>
 
   <body>
     <header>
       <div class="search-container">
-        <button
+        <button type="button"
           id="filterBtn"
           title="filter"
           class="filter"
@@ -99,7 +100,7 @@
         required
         class="ci"
       />
-      <button  class="submit" onclick="registerCar()">
+      <button  type="button" class="submit" onclick="registerCar()">
         Register
       </button>
     </form>
@@ -115,10 +116,18 @@
           <option value="reservationDay">Reservation Day</option>
         </select>
         <form id="search">
-          <div id="searchInputs">
+
+		  
             <div id="carInfoFields" style="display: block">
-              <input type="text" id="carModel" placeholder="Car Model" />
-              <input type="text" id="carPlateId" placeholder="Car Plate ID" />
+
+              <button type="button" title="filter" class="m"  onclick="_openFilterSettings()">
+          <svg viewBox="0 0 512 512" height="1em">
+            <path
+              d="M0 416c0 17.7 14.3 32 32 32l54.7 0c12.3 28.3 40.5 48 73.3 48s61-19.7 73.3-48L480 448c17.7 0 32-14.3 32-32s-14.3-32-32-32l-246.7 0c-12.3-28.3-40.5-48-73.3-48s-61 19.7-73.3 48L32 384c-17.7 0-32 14.3-32 32zm128 0a32 32 0 1 1 64 0 32 32 0 1 1 -64 0zM320 256a32 32 0 1 1 64 0 32 32 0 1 1 -64 0zm32-80c-32.8 0-61 19.7-73.3 48L32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l246.7 0c12.3 28.3 40.5 48 73.3 48s61-19.7 73.3-48l54.7 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-54.7 0c-12.3-28.3-40.5-48-73.3-48zM192 128a32 32 0 1 1 0-64 32 32 0 1 1 0 64zm73.3-64C253 35.7 224.8 16 192 16s-61 19.7-73.3 48L32 64C14.3 64 0 78.3 0 96s14.3 32 32 32l86.7 0c12.3 28.3 40.5 48 73.3 48s61-19.7 73.3-48L480 128c17.7 0 32-14.3 32-32s-14.3-32-32-32L265.3 64z"
+            ></path> 
+          </svg>Filter Cars
+        </button>
+		
             </div>
             <div id="customerInfoFields" style="display: none">
               <input
@@ -144,8 +153,155 @@
                 placeholder="Reservation Date"
               />
             </div>
+			
+			<div class="filter-modal" id="filterModal">
+      <div class="filter-content" style="background-color: rgb(251, 243, 228);">
+        <span class="exit-btn" onclick="closeFilterSettings()">X</span>
+        <div class="filter-categories">
+	
+      <div class="filter-category">
+        <div class="category-header" onclick="toggleCategory('filterCarID')">
+          Plate ID <span class="dropdown-arrow">&#9660;</span>
+        </div>
+        <div class="category-settings" id="filterCarID">
+          <input type="text" name="car_id" placeholder="Enter Plate ID" />
+        </div>
+      </div>
+
+      <div class="filter-category">
+        <div class="category-header" onclick="toggleCategory('filterBrand')">
+          Brand <span class="dropdown-arrow">&#9660;</span>
+        </div>
+        <div class="category-settings" id="filterBrand">
+          <!-- Use multi-select chips for brand -->
+          <!-- Example: -->
+          <div>
+            <input type="checkbox" name="brand" value="Toyota" />
+            <label for="brand_Toyota">Toyota</label>
           </div>
-          <button id="advancedSearchButton" onclick="advancedSearch()">
+          <div>
+            <input type="checkbox" name="brand" value="Tesla" />
+            <label for="brand_Tesla">Tesla</label>
+          </div>
+          <!-- Add more options as needed -->
+        </div>
+      </div>
+
+      <div class="filter-category">
+  <div class="category-header" onclick="toggleCategory('filterYear')">
+    Year <span class="dropdown-arrow">&#9660;</span>
+  </div>
+  <div class="category-settings" id="filterYear">
+    <!-- Use drop-down list for year -->
+    <!-- Example: -->
+    <select name="year">
+      <option value="">All</option>
+      <!-- Add options dynamically if needed -->
+      <option value="2000">2000</option>
+      <option value="2001">2001</option>
+      <!-- ... -->
+      <option value="2023">2023</option>
+    </select>
+  </div>
+</div>
+
+      <div class="filter-category">
+        <div class="category-header" onclick="toggleCategory('filterStatus')">
+          Status <span class="dropdown-arrow">&#9660;</span>
+        </div>
+        <div class="category-settings" id="filterStatus">
+          <!-- Use radio buttons for status -->
+          <!-- Example: -->
+          <div>
+            <input type="radio" name="status" value="active" />
+            <label for="status_active">Active</label>
+          </div>
+          <div>
+            <input type="radio" name="status" value="out_of_service" />
+            <label for="status_out_of_service">Out of Service</label>
+          </div>
+          <div>
+            <input type="radio" name="status" value="rented" />
+            <label for="status_rented">Rented</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="filter-category">
+  <div class="category-header" onclick="toggleCategory('filterPricePerDay')">
+    Price per Day <span class="dropdown-arrow">&#9660;</span>
+  </div>
+  <div class="category-settings" id="filterPricePerDay">
+    <!-- Use drop-down list for price per day -->
+    <!-- Example: -->
+    <select name="price_per_day">
+      <option value="">Select Price</option>
+      <!-- Add options dynamically if needed -->
+      <option value="">All</option>
+	  <option value="50">50</option>
+      <option value="100">100</option>
+      <!-- ... -->
+      <option value="1000">1000</option>
+    </select>
+  </div>
+</div>
+
+      <div class="filter-category">
+        <div class="category-header" onclick="toggleCategory('filterBodyShape')">
+          Body Shape <span class="dropdown-arrow">&#9660;</span>
+        </div>
+        <div class="category-settings" id="filterBodyShape">
+          <!-- Use checkboxes for body shape -->
+          <!-- Example: -->
+          <div>
+            <input type="checkbox" name="body_shape" value="sedan" />
+            <label for="body_shape_sedan">Sedan</label>
+          </div>
+          <div>
+            <input type="checkbox" name="body_shape" value="SUV" />
+            <label for="body_shape_SUV">SUV</label>
+          </div>
+          <!-- Add more options as needed -->
+        </div>
+      </div>
+
+      <div class="filter-category">
+        <div class="category-header" onclick="toggleCategory('filterColor')">
+          Color <span class="dropdown-arrow">&#9660;</span>
+        </div>
+        <div class="category-settings" id="filterColor">
+          <!-- Use checkboxes for color -->
+          <!-- Example: -->
+          <div>
+            <input type="checkbox" name="color" value="Red" />
+            <label for="color_red">Red</label>
+          </div>
+          <div>
+            <input type="checkbox" name="color" value="Blue" />
+            <label for="color_blue">Blue</label>
+          </div>
+          <!-- Add more options as needed -->
+        </div>
+      </div>
+
+    </div>
+
+    <button type="button" class="save-btn" onclick="saveFilters()">Save</button>
+  </div>
+</div>
+
+			
+            <div id="customerInfoFields" style="display: none">
+              <input type="text"id="customerName"placeholder="Customer Name"/>
+              <input type="text" id="customerEmail" placeholder="Customer Email"/>
+            </div>
+			
+            <div id="reservationFields" style="display: none">
+              <input type="date" id="reservationDate" placeholder="Reservation Date"/>
+            </div>	
+
+          
+		  <button type="button" id="advancedSearchButton" onclick="advancedSearch()">
             Search
           </button>
         </form>
@@ -175,7 +331,7 @@
           </option>
         </select>
         <input type="date" id="reportPeriod" />
-        <button id="generateReportButton" onclick="getreport()">
+        <button type="button" id="generateReportButton" onclick="getreport()">
           Generate Report
         </button>
         <!-- Display generated reports -->
@@ -188,7 +344,7 @@
         <pre id="logTerminal"></pre>
     </div>
     <div class="button-container">
-        <button id="downloadButton">Download</button>
+        <button type="button" id="downloadButton">Download</button>
     </div>
 </div>
 
