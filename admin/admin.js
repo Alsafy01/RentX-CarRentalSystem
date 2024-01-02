@@ -199,3 +199,79 @@ function downloadLogs() {
     // Remove the link from the terminal container
     document.getElementById("terminalContainer").removeChild(link);
 }
+
+
+
+
+function _openFilterSettings() {
+	console.log("fuck");
+  var filterModal = document.getElementById("filterModal");
+  filterModal.style.display = "flex";
+}
+
+function toggleCategory(categoryId) {
+  var selectedCategory = document.getElementById(categoryId);
+  var isActive = selectedCategory.classList.contains("active");
+
+  var categories = document.querySelectorAll(".category-settings");
+  categories.forEach(function (category) {
+    if (category.id !== categoryId) {
+      category.classList.remove("active");
+    }
+  });
+
+  if (!isActive) {
+    selectedCategory.classList.add("active");
+  } else {
+    selectedCategory.classList.remove("active");
+  }
+}
+
+function closeFilterSettings() {
+  var filterModal = document.getElementById("filterModal");
+  filterModal.style.display = "none";
+}
+
+function saveFilters() {
+    // Get filter values from your HTML elements
+    const carIdFilter = document.querySelector('[name="car_id"]').value.trim().toLowerCase();
+    const selectedBrands = Array.from(document.querySelectorAll('[name="brand"]:checked')).map(checkbox => checkbox.value);
+    const selectedYear = document.querySelector('[name="year"]').value;
+    const selectedStatus = document.querySelector('[name="status"]:checked') ? document.querySelector('[name="status"]:checked').value : null;
+    const pricePerDayFilter = document.querySelector('[name="price_per_day"]').value;
+    const selectedBodyShapes = Array.from(document.querySelectorAll('[name="body_shape"]:checked')).map(checkbox => checkbox.value);
+    const selectedColors = Array.from(document.querySelectorAll('[name="color"]:checked')).map(checkbox => checkbox.value);
+
+    // Prepare data to send to the server
+    const filtersData = {
+        carIdFilter,
+        selectedBrands,
+        selectedYear,
+        selectedStatus,
+        pricePerDayFilter,
+        selectedBodyShapes,
+        selectedColors
+    };
+
+    // Send an AJAX request to the PHP file
+    $.ajax({
+        type: "POST",
+        url: "advancedSearch.php", // Replace with the actual path to your PHP file
+        data: JSON.stringify(filtersData),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function(response) {
+            // Handle the response and display results on the page
+            if (response.length > 0) {
+                // Assuming you have a function to display the results, modify accordingly
+                console.log(response);
+            } else {
+                // No matching data found
+                console.log("No matching data found.");
+            }
+        },
+        error: function(error) {
+            console.error("Error fetching filtered data:", error);
+        }
+    });
+}
