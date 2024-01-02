@@ -119,7 +119,6 @@
 
 		  
             <div id="carInfoFields" style="display: block">
-
               <button type="button" title="filter" class="m"  onclick="_openFilterSettings()">
           <svg viewBox="0 0 512 512" height="1em">
             <path
@@ -127,32 +126,23 @@
             ></path> 
           </svg>Filter Cars
         </button>
-		
             </div>
             <div id="customerInfoFields" style="display: none">
               <input
-				type="text"
-				id="customerName"
-				placeholder="Customer Name"
-			/>
-
-			<input
-				type="tel"
-				id="phone"
-				placeholder="Phone Number"
-				class="t"
-				pattern="[\d\+\-\s]+"
-				title="Please enter a valid phone number"
-			/>
-
-			<input
-				type="email"  
-				id="customerEmail"
-				placeholder="Customer Email"
-				pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"  
-				title="Please enter a valid email address"
-			/>
-
+                type="text"
+                id="customerName"
+                placeholder="Customer Name"
+              />
+              <input
+                type="text"
+                id="phone"
+                placeholder="Phone Number"
+              />
+              <input
+                type="text"
+                id="customerEmail"
+                placeholder="Customer Email"
+              />
             </div>
             <div id="reservationFields" style="display: none">
               <input
@@ -160,6 +150,7 @@
                 id="reservationDate"
                 placeholder="Reservation Date"
               />
+
             </div>
 			
 			<div class="filter-modal" id="filterModal">
@@ -331,14 +322,12 @@
           <option value="status_of_cars_on_specific_day">
             Status of All Cars on a Specific Day
           </option>
-          <option value="reservations_of_specific_customer">
-            All Reservations of Specific Customer
-          </option>
           <option value="daily_payments_within_period">
             Daily Payments Within Specific Period
           </option>
         </select>
-        <input type="date" id="reportPeriod" />
+        <input type="date" id="START" placeholder="START Date"/>
+			  <input type="date" id="END" placeholder="END Date"/>
         <button type="button" id="generateReportButton" onclick="getreport()">
           Generate Report
         </button>

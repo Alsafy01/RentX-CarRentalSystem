@@ -1,0 +1,488 @@
+Received Data: 
+SQL Query: 
+    SELECT
+        Reservations.reservation_id,
+        Reservations.car_id,
+        Reservations.customer_id,
+        Reservations.reservation_date,
+        Reservations.pickup_date,
+        Reservations.return_date,
+        Reservations.status AS reservation_status,
+        Cars.model AS car_model,
+        Cars.brand AS car_brand,
+        Customers.name AS customer_name,
+        Customers.email AS customer_email
+    FROM Reservations
+    LEFT JOIN Cars ON Reservations.car_id = Cars.car_id
+    LEFT JOIN Customers ON Reservations.customer_id = Customers.customer_id
+    WHERE (Reservations.pickup_date BETWEEN '' AND '')
+    OR (Reservations.return_date BETWEEN '' AND '')
+
+Fetched Data: Array
+(
+)
+
+Received Data: 
+SQL Query: 
+    SELECT
+        Reservations.reservation_id,
+        Reservations.car_id,
+        Reservations.customer_id,
+        Reservations.reservation_date,
+        Reservations.pickup_date,
+        Reservations.return_date,
+        Reservations.status AS reservation_status,
+        Cars.model AS car_model,
+        Cars.brand AS car_brand,
+        Customers.name AS customer_name,
+        Customers.email AS customer_email
+    FROM Reservations
+    LEFT JOIN Cars ON Reservations.car_id = Cars.car_id
+    LEFT JOIN Customers ON Reservations.customer_id = Customers.customer_id
+    WHERE (Reservations.pickup_date BETWEEN '' AND '')
+    OR (Reservations.return_date BETWEEN '' AND '')
+
+Fetched Data: Array
+(
+)
+
+Received Data: 
+SQL Query: 
+    SELECT
+        Reservations.reservation_id,
+        Reservations.car_id,
+        Reservations.customer_id,
+        Reservations.reservation_date,
+        Reservations.pickup_date,
+        Reservations.return_date,
+        Reservations.status AS reservation_status,
+        Cars.model AS car_model,
+        Cars.brand AS car_brand,
+        Customers.name AS customer_name,
+        Customers.email AS customer_email
+    FROM Reservations
+    LEFT JOIN Cars ON Reservations.car_id = Cars.car_id
+    LEFT JOIN Customers ON Reservations.customer_id = Customers.customer_id
+    WHERE (Reservations.pickup_date BETWEEN '' AND '')
+    OR (Reservations.return_date BETWEEN '' AND '')
+
+Fetched Data: Array
+(
+)
+
+Received Data: 
+SQL Query: 
+    SELECT
+        Reservations.reservation_id,
+        Reservations.car_id,
+        Reservations.customer_id,
+        Reservations.reservation_date,
+        Reservations.pickup_date,
+        Reservations.return_date,
+        Reservations.status AS reservation_status,
+        Cars.model AS car_model,
+        Cars.brand AS car_brand,
+        Customers.name AS customer_name,
+        Customers.email AS customer_email
+    FROM Reservations
+    LEFT JOIN Cars ON Reservations.car_id = Cars.car_id
+    LEFT JOIN Customers ON Reservations.customer_id = Customers.customer_id
+    WHERE (Reservations.pickup_date BETWEEN '' AND '')
+    OR (Reservations.return_date BETWEEN '' AND '')
+
+Fetched Data: Array
+(
+)
+
+Received Data: 
+SQL Query: 
+    SELECT
+        Reservations.reservation_id,
+        Reservations.car_id,
+        Reservations.customer_id,
+        Reservations.reservation_date,
+        Reservations.pickup_date,
+        Reservations.return_date,
+        Reservations.status AS reservation_status,
+        Cars.model AS car_model,
+        Cars.brand AS car_brand,
+        Customers.name AS customer_name,
+        Customers.email AS customer_email
+    FROM Reservations
+    LEFT JOIN Cars ON Reservations.car_id = Cars.car_id
+    LEFT JOIN Customers ON Reservations.customer_id = Customers.customer_id
+    WHERE (Reservations.pickup_date BETWEEN '' AND '')
+    OR (Reservations.return_date BETWEEN '' AND '')
+
+Fetched Data: Array
+(
+)
+
+Received Data: 
+SQL Query: 
+    SELECT
+        Reservations.reservation_id,
+        Reservations.car_id,
+        Reservations.customer_id,
+        Reservations.reservation_date,
+        Reservations.pickup_date,
+        Reservations.return_date,
+        Reservations.status AS reservation_status,
+        Cars.model AS car_model,
+        Cars.brand AS car_brand,
+        Customers.name AS customer_name,
+        Customers.email AS customer_email
+    FROM Reservations
+    LEFT JOIN Cars ON Reservations.car_id = Cars.car_id
+    LEFT JOIN Customers ON Reservations.customer_id = Customers.customer_id
+    WHERE (Reservations.pickup_date BETWEEN '2021-01-01' AND '2024-01-01')
+    OR (Reservations.return_date BETWEEN '2021-01-01' AND '2024-01-01')
+
+Fetched Data: Array
+(
+    [0] => Array
+        (
+            [reservation_id] => 1
+            [car_id] => 1
+            [customer_id] => 1
+            [reservation_date] => 2023-01-01
+            [pickup_date] => 2023-01-05
+            [return_date] => 2023-01-10
+            [reservation_status] => returned
+            [car_model] => Camry
+            [car_brand] => Toyota
+            [customer_name] => John Doe
+            [customer_email] => john@example.com
+        )
+
+    [1] => Array
+        (
+            [reservation_id] => 2
+            [car_id] => 2
+            [customer_id] => 2
+            [reservation_date] => 2023-02-01
+            [pickup_date] => 2023-02-07
+            [return_date] => 2023-02-15
+            [reservation_status] => returned
+            [car_model] => Accord
+            [car_brand] => Honda
+            [customer_name] => Jane Smith
+            [customer_email] => jane@example.com
+        )
+
+    [2] => Array
+        (
+            [reservation_id] => 3
+            [car_id] => 3
+            [customer_id] => 3
+            [reservation_date] => 2023-03-15
+            [pickup_date] => 2023-03-20
+            [return_date] => 2023-03-25
+            [reservation_status] => returned
+            [car_model] => Mustang
+            [car_brand] => Ford
+            [customer_name] => Bob Johnson
+            [customer_email] => bob@example.com
+        )
+
+    [3] => Array
+        (
+            [reservation_id] => 4
+            [car_id] => 4
+            [customer_id] => 4
+            [reservation_date] => 2023-04-05
+            [pickup_date] => 2023-04-10
+            [return_date] => 2023-04-15
+            [reservation_status] => returned
+            [car_model] => Civic
+            [car_brand] => Honda
+            [customer_name] => Alice Brown
+            [customer_email] => alice@example.com
+        )
+
+    [4] => Array
+        (
+            [reservation_id] => 5
+            [car_id] => 5
+            [customer_id] => 5
+            [reservation_date] => 2023-05-20
+            [pickup_date] => 2023-05-25
+            [return_date] => 2023-06-01
+            [reservation_status] => returned
+            [car_model] => Corolla
+            [car_brand] => Toyota
+            [customer_name] => Charlie Davis
+            [customer_email] => charlie@example.com
+        )
+
+)
+
+Received Data: 
+SQL Query: 
+    SELECT
+        Reservations.reservation_id,
+        Reservations.car_id,
+        Reservations.customer_id,
+        Reservations.reservation_date,
+        Reservations.pickup_date,
+        Reservations.return_date,
+        Reservations.status AS reservation_status,
+        Cars.model AS car_model,
+        Cars.brand AS car_brand,
+        Customers.name AS customer_name,
+        Customers.email AS customer_email
+    FROM Reservations
+    LEFT JOIN Cars ON Reservations.car_id = Cars.car_id
+    LEFT JOIN Customers ON Reservations.customer_id = Customers.customer_id
+    WHERE (Reservations.pickup_date BETWEEN '' AND '')
+    OR (Reservations.return_date BETWEEN '' AND '')
+
+Fetched Data: Array
+(
+)
+
+Received Data: 
+SQL Query: 
+    SELECT
+        Reservations.reservation_id,
+        Reservations.car_id,
+        Reservations.customer_id,
+        Reservations.reservation_date,
+        Reservations.pickup_date,
+        Reservations.return_date,
+        Reservations.status AS reservation_status,
+        Cars.model AS car_model,
+        Cars.brand AS car_brand,
+        Customers.name AS customer_name,
+        Customers.email AS customer_email
+    FROM Reservations
+    LEFT JOIN Cars ON Reservations.car_id = Cars.car_id
+    LEFT JOIN Customers ON Reservations.customer_id = Customers.customer_id
+    WHERE (Reservations.pickup_date BETWEEN '' AND '')
+    OR (Reservations.return_date BETWEEN '' AND '')
+
+Fetched Data: Array
+(
+)
+
+Received Data: 
+SQL Query: 
+    SELECT
+        Reservations.reservation_id,
+        Reservations.car_id,
+        Reservations.customer_id,
+        Reservations.reservation_date,
+        Reservations.pickup_date,
+        Reservations.return_date,
+        Reservations.status AS reservation_status,
+        Cars.model AS car_model,
+        Cars.brand AS car_brand,
+        Customers.name AS customer_name,
+        Customers.email AS customer_email
+    FROM Reservations
+    LEFT JOIN Cars ON Reservations.car_id = Cars.car_id
+    LEFT JOIN Customers ON Reservations.customer_id = Customers.customer_id
+    WHERE (Reservations.pickup_date BETWEEN '' AND '')
+    OR (Reservations.return_date BETWEEN '' AND '')
+
+Fetched Data: Array
+(
+)
+
+Received Data: 
+SQL Query: 
+    SELECT
+        Reservations.reservation_id,
+        Reservations.car_id,
+        Reservations.customer_id,
+        Reservations.reservation_date,
+        Reservations.pickup_date,
+        Reservations.return_date,
+        Reservations.status AS reservation_status,
+        Cars.model AS car_model,
+        Cars.brand AS car_brand,
+        Customers.name AS customer_name,
+        Customers.email AS customer_email
+    FROM Reservations
+    LEFT JOIN Cars ON Reservations.car_id = Cars.car_id
+    LEFT JOIN Customers ON Reservations.customer_id = Customers.customer_id
+    WHERE (Reservations.pickup_date BETWEEN '2019-06-12' AND '2024-01-25')
+    OR (Reservations.return_date BETWEEN '2019-06-12' AND '2024-01-25')
+
+Fetched Data: Array
+(
+    [0] => Array
+        (
+            [reservation_id] => 1
+            [car_id] => 1
+            [customer_id] => 1
+            [reservation_date] => 2023-01-01
+            [pickup_date] => 2023-01-05
+            [return_date] => 2023-01-10
+            [reservation_status] => returned
+            [car_model] => Camry
+            [car_brand] => Toyota
+            [customer_name] => John Doe
+            [customer_email] => john@example.com
+        )
+
+    [1] => Array
+        (
+            [reservation_id] => 2
+            [car_id] => 2
+            [customer_id] => 2
+            [reservation_date] => 2023-02-01
+            [pickup_date] => 2023-02-07
+            [return_date] => 2023-02-15
+            [reservation_status] => returned
+            [car_model] => Accord
+            [car_brand] => Honda
+            [customer_name] => Jane Smith
+            [customer_email] => jane@example.com
+        )
+
+    [2] => Array
+        (
+            [reservation_id] => 3
+            [car_id] => 3
+            [customer_id] => 3
+            [reservation_date] => 2023-03-15
+            [pickup_date] => 2023-03-20
+            [return_date] => 2023-03-25
+            [reservation_status] => returned
+            [car_model] => Mustang
+            [car_brand] => Ford
+            [customer_name] => Bob Johnson
+            [customer_email] => bob@example.com
+        )
+
+    [3] => Array
+        (
+            [reservation_id] => 4
+            [car_id] => 4
+            [customer_id] => 4
+            [reservation_date] => 2023-04-05
+            [pickup_date] => 2023-04-10
+            [return_date] => 2023-04-15
+            [reservation_status] => returned
+            [car_model] => Civic
+            [car_brand] => Honda
+            [customer_name] => Alice Brown
+            [customer_email] => alice@example.com
+        )
+
+    [4] => Array
+        (
+            [reservation_id] => 5
+            [car_id] => 5
+            [customer_id] => 5
+            [reservation_date] => 2023-05-20
+            [pickup_date] => 2023-05-25
+            [return_date] => 2023-06-01
+            [reservation_status] => returned
+            [car_model] => Corolla
+            [car_brand] => Toyota
+            [customer_name] => Charlie Davis
+            [customer_email] => charlie@example.com
+        )
+
+)
+
+Received Data: 
+SQL Query: 
+    SELECT
+        Reservations.reservation_id,
+        Reservations.car_id,
+        Reservations.customer_id,
+        Reservations.reservation_date,
+        Reservations.pickup_date,
+        Reservations.return_date,
+        Reservations.status AS reservation_status,
+        Cars.model AS car_model,
+        Cars.brand AS car_brand,
+        Customers.name AS customer_name,
+        Customers.email AS customer_email
+    FROM Reservations
+    LEFT JOIN Cars ON Reservations.car_id = Cars.car_id
+    LEFT JOIN Customers ON Reservations.customer_id = Customers.customer_id
+    WHERE (Reservations.pickup_date BETWEEN '' AND '')
+    OR (Reservations.return_date BETWEEN '' AND '')
+
+Fetched Data: Array
+(
+)
+
+Received Data: 
+SQL Query: 
+    SELECT
+        Reservations.reservation_id,
+        Reservations.car_id,
+        Reservations.customer_id,
+        Reservations.reservation_date,
+        Reservations.pickup_date,
+        Reservations.return_date,
+        Reservations.status AS reservation_status,
+        Cars.model AS car_model,
+        Cars.brand AS car_brand,
+        Customers.name AS customer_name,
+        Customers.email AS customer_email
+    FROM Reservations
+    LEFT JOIN Cars ON Reservations.car_id = Cars.car_id
+    LEFT JOIN Customers ON Reservations.customer_id = Customers.customer_id
+    WHERE (Reservations.pickup_date BETWEEN '' AND '')
+    OR (Reservations.return_date BETWEEN '' AND '')
+
+Fetched Data: Array
+(
+)
+
+Received Data: 
+SQL Query: 
+    SELECT
+        Reservations.reservation_id,
+        Reservations.car_id,
+        Reservations.customer_id,
+        Reservations.reservation_date,
+        Reservations.pickup_date,
+        Reservations.return_date,
+        Reservations.status AS reservation_status,
+        Cars.model AS car_model,
+        Cars.brand AS car_brand,
+        Customers.name AS customer_name,
+        Customers.email AS customer_email
+    FROM Reservations
+    LEFT JOIN Cars ON Reservations.car_id = Cars.car_id
+    LEFT JOIN Customers ON Reservations.customer_id = Customers.customer_id
+    WHERE (Reservations.pickup_date BETWEEN '' AND '')
+    OR (Reservations.return_date BETWEEN '' AND '')
+
+Fetched Data: Array
+(
+)
+
+Received Start Date: , Converted Start Date: 
+Received End Date: , Converted End Date: 
+Received Data: 
+SQL Query: 
+    SELECT
+        Reservations.reservation_id,
+        Reservations.car_id,
+        Reservations.customer_id,
+        Reservations.reservation_date,
+        Reservations.pickup_date,
+        Reservations.return_date,
+        Reservations.status AS reservation_status,
+        Cars.model AS car_model,
+        Cars.brand AS car_brand,
+        Customers.name AS customer_name,
+        Customers.email AS customer_email
+    FROM Reservations
+    LEFT JOIN Cars ON Reservations.car_id = Cars.car_id
+    LEFT JOIN Customers ON Reservations.customer_id = Customers.customer_id
+    WHERE (Reservations.pickup_date BETWEEN '' AND '')
+    OR (Reservations.return_date BETWEEN '' AND '')
+
+Fetched Data: Array
+(
+)
+

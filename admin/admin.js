@@ -10,7 +10,6 @@ function openFilterSettings() {
 }
 
 var actionDropdown = document.getElementById("actionType");
-
 var registerCarContent = document.getElementById("registerCarContent");
 var searchContent = document.getElementById("searchContent");
 var generateReportContent = document.getElementById("generateReportContent");
@@ -32,7 +31,6 @@ actionDropdown.addEventListener("change", function () {
 
 //dropdown element
 var searchTypeDropdown = document.getElementById("searchType");
-
 //input field divs for each option
 var carInfoFields = document.getElementById("carInfoFields");
 var customerInfoFields = document.getElementById("customerInfoFields");
@@ -56,41 +54,45 @@ searchTypeDropdown.addEventListener("change", function () {
 });
 
 function getreport() {
-  //insert code to get the reports from query use getelementbyid for ech input text or date
+  var report = document.getElementById("reportType").value;
+  console.log(report);
+  if (report === "status_of_cars_on_specific_day") {
+    var reportPeriod = document.getElementById("START").value;
+    console.log(reportPeriod);
+    var formData = new FormData();
+    formData.append('variable', reportPeriod);
+    console.log(formData);
+
+    fetch('status_of_cars_on_specific_day.php', {
+      method: 'POST',
+      body: formData,
+    })
+    .then(response => response.json())
+    .then(response => {
+      // Print the results in the console log
+      console.log("Car Status on Specific Day:");
+      console.log(response);
+      response.forEach((carData, index) => {
+            // Choose a color based on the index
+            const color = index % 2 === 0 ? 'green' : 'blue';
+            
+            // Create a log string from the carData object
+            const log = Object.keys(carData).map(key => `${key}: ${carData[key]}`).join(', ');
+
+            // Add the log to the terminal with the specified color
+            addLogToTerminal(log, color);
+        });
+
+    })
+    .catch(error => console.error('Error:', error));
+  }
+  if (report === "reservations_within_period") {
+	  saveFilters2();
+} if (report === "reservations_of_car_within_period") {
+	  saveFilters3();
+} if (report === "daily_payments_within_period") {
+	  saveFilters4();
 }
-function advancedSearch() {
-    // Object to store search parameters
-    var searchParams = {};
-
-    // Read values based on the selected search type
-    if (searchType === "carInformation") {
-      searchParams.carModel = document.getElementById("carModel").value;
-      searchParams.carPlateId = document.getElementById("carPlateId").value;
-    } else if (searchType === "customerInformation") {
-      searchParams.customerName = document.getElementById("customerName").value;
-      searchParams.phone = document.getElementById("phone").value;
-      searchParams.customerEmail = document.getElementById("customerEmail").value;
-    } else if (searchType === "reservationDay") {
-      searchParams.reservationDate = document.getElementById("reservationDate").value;
-    }
-
-    $.ajax({
-      url: 'search.php', // Replace with the actual server-side script URL
-      type: 'POST',
-      data: searchParams,
-      success: function(response) {
-          console.log(response);
-          addLogToTerminal(response);
-          downloadLogs();
-          // Handle success response from the server (you can update the UI here)
-      },
-      error: function(error) {
-          console.error(error);
-          // Handle error response from the server
-      }
-  });
-
-
 }
 
 function registerCar() {
@@ -342,15 +344,202 @@ for (const key in filtersData) {
     closeFilterSettings();
 
     // Clear form inputs
-    const formInputs = document.querySelectorAll(
-        'input[type="text"], input[type="checkbox"], input[type="radio"], input[type="range"]'
-    );
-    formInputs.forEach((input) => {
-        if (input.type === 'checkbox' || input.type === 'radio') {
-            input.checked = false;
-        } else {
-            input.value = '';
-        }
-    });
+    //const formInputs = document.querySelectorAll(
+      //  'input[type="text"], input[type="checkbox"], input[type="radio"], input[type="range"]'
+    //);
+    //formInputs.forEach((input) => {
+      //  if (input.type === 'checkbox' || input.type === 'radio') {
+           // input.checked = false;
+        //} else {
+          //  input.value = '';
+        //}
+    //});
 }
 
+document.getElementById('START').addEventListener('change', function () {
+	const pickupDate = this.value;
+	document.getElementById('END').min = pickupDate;
+});
+
+document.getElementById('END').addEventListener('change', function () {
+	const returnDate = this.value;
+	document.getElementById('START').max = returnDate;
+});
+
+
+function saveFilters2() {
+    clearTerminal();
+    // Use startDate and endDate instead of reservationDate
+    const startDate = document.getElementById('START').value;
+    const endDate = document.getElementById('END').value;
+
+    // Include startDate, endDate, customer name, phone, and email in the filtersData object
+    const filtersData = {
+        startDate, // Use startDate instead of reservationDate
+        endDate     // Use endDate instead of reservationDate
+    };
+
+    // Loop over each attribute in filtersData
+    for (const key in filtersData) {
+        if (filtersData.hasOwnProperty(key)) {
+            const value = filtersData[key];
+            console.log(`${key}:`, value);
+        }
+    }
+
+    // Send an AJAX request to the PHP file
+    $.ajax({
+        type: "POST",
+        url: "1.php", // Replace with the actual path to your PHP file
+        data: JSON.stringify(filtersData),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function(response) {
+            // Handle the response and display results on the page
+            if (response.length > 0) {
+                console.log(response);
+                // Iterate through the array of objects
+                response.forEach((carData, index) => {
+                    // Choose a color based on the index
+                    const color = index % 2 === 0 ? 'green' : 'blue';
+
+                    // Create a log string from the carData object
+                    const log = Object.keys(carData).map(key => `${key}: ${carData[key]}`).join(', ');
+
+                    // Add the log to the terminal with the specified color
+                    addLogToTerminal(log, color);
+                });
+            } else {
+                // No data received
+                addLogToTerminal("No matched data found.", 'red');
+                console.log("No matched data found.");
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error("Error fetching filtered data:", xhr, status, error);
+        }
+    });
+
+    // After filtering, you can update the UI with the merged result
+    closeFilterSettings();
+}
+
+
+function saveFilters3() {
+    clearTerminal();
+
+    // Get filter values from your HTML elements
+    const carIdFilter = document.querySelector('[name="car_id"]').value.trim().toLowerCase();
+    const startDate = document.getElementById('START').value;
+    const endDate = document.getElementById('END').value;
+
+    // Include startDate, endDate, carIdFilter, customer name, phone, and email in the filtersData object
+    const filtersData = {
+        carIdFilter,
+        startDate,
+        endDate
+        // ... (other existing filters)
+    };
+
+    // Loop over each attribute in filtersData
+    for (const key in filtersData) {
+        if (filtersData.hasOwnProperty(key)) {
+            const value = filtersData[key];
+            console.log(`${key}:`, value);
+        }
+    }
+
+    // Send an AJAX request to the PHP file
+    $.ajax({
+        type: "POST",
+        url: "3.php", // Replace with the actual path to your PHP file
+        data: JSON.stringify(filtersData),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function(response) {
+            // Handle the response and display results on the page
+            if (response.length > 0) {
+                console.log(response);
+                // Iterate through the array of objects
+                response.forEach((carData, index) => {
+                    // Choose a color based on the index
+                    const color = index % 2 === 0 ? 'green' : 'blue';
+
+                    // Create a log string from the carData object
+                    const log = Object.keys(carData).map(key => `${key}: ${carData[key]}`).join(', ');
+
+                    // Add the log to the terminal with the specified color
+                    addLogToTerminal(log, color);
+                });
+            } else {
+                // No data received
+                addLogToTerminal("No matched data found.", 'red');
+                console.log("No matched data found.");
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error("Error fetching filtered data:", xhr, status, error);
+        }
+    });
+
+    // After filtering, you can update the UI with the merged result
+    closeFilterSettings();
+}
+
+
+function saveFilters4() {
+    clearTerminal();
+    // Use startDate and endDate instead of reservationDate
+    const startDate = document.getElementById('START').value;
+    const endDate = document.getElementById('END').value;
+
+    // Include startDate, endDate, customer name, phone, and email in the filtersData object
+    const filtersData = {
+        startDate, // Use startDate instead of reservationDate
+        endDate     // Use endDate instead of reservationDate
+    };
+
+    // Loop over each attribute in filtersData
+    for (const key in filtersData) {
+        if (filtersData.hasOwnProperty(key)) {
+            const value = filtersData[key];
+            console.log(`${key}:`, value);
+        }
+    }
+
+    // Send an AJAX request to the PHP file
+    $.ajax({
+        type: "POST",
+        url: "4.php", // Replace with the actual path to your PHP file
+        data: JSON.stringify(filtersData),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function(response) {
+            // Handle the response and display results on the page
+            if (response.length > 0) {
+                console.log(response);
+                // Iterate through the array of objects
+                response.forEach((carData, index) => {
+                    // Choose a color based on the index
+                    const color = index % 2 === 0 ? 'green' : 'blue';
+
+                    // Create a log string from the carData object
+                    const log = Object.keys(carData).map(key => `${key}: ${carData[key]}`).join(', ');
+
+                    // Add the log to the terminal with the specified color
+                    addLogToTerminal(log, color);
+                });
+            } else {
+                // No data received
+                addLogToTerminal("No matched data found.", 'red');
+                console.log("No matched data found.");
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error("Error fetching filtered data:", xhr, status, error);
+        }
+    });
+
+    // After filtering, you can update the UI with the merged result
+    closeFilterSettings();
+}
