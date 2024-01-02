@@ -119,6 +119,7 @@
 
 		  
             <div id="carInfoFields" style="display: block">
+
               <button type="button" title="filter" class="m"  onclick="_openFilterSettings()">
           <svg viewBox="0 0 512 512" height="1em">
             <path
@@ -126,6 +127,31 @@
             ></path> 
           </svg>Filter Cars
         </button>
+		
+            </div>
+            <div id="customerInfoFields" style="display: none">
+              <input
+                type="text"
+                id="customerName"
+                placeholder="Customer Name"
+              />
+              <input
+                type="text"
+                id="phone"
+                placeholder="Phone Number"
+              />
+              <input
+                type="text"
+                id="customerEmail"
+                placeholder="Customer Email"
+              />
+            </div>
+            <div id="reservationFields" style="display: none">
+              <input
+                type="date"
+                id="reservationDate"
+                placeholder="Reservation Date"
+              />
             </div>
 			
 			<div class="filter-modal" id="filterModal">

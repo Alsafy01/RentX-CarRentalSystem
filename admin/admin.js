@@ -59,7 +59,38 @@ function getreport() {
   //insert code to get the reports from query use getelementbyid for ech input text or date
 }
 function advancedSearch() {
-  //insert code to get the search desired from query use getelementbyid for ech input text or date
+    // Object to store search parameters
+    var searchParams = {};
+
+    // Read values based on the selected search type
+    if (searchType === "carInformation") {
+      searchParams.carModel = document.getElementById("carModel").value;
+      searchParams.carPlateId = document.getElementById("carPlateId").value;
+    } else if (searchType === "customerInformation") {
+      searchParams.customerName = document.getElementById("customerName").value;
+      searchParams.phone = document.getElementById("phone").value;
+      searchParams.customerEmail = document.getElementById("customerEmail").value;
+    } else if (searchType === "reservationDay") {
+      searchParams.reservationDate = document.getElementById("reservationDate").value;
+    }
+
+    $.ajax({
+      url: 'search.php', // Replace with the actual server-side script URL
+      type: 'POST',
+      data: searchParams,
+      success: function(response) {
+          console.log(response);
+          addLogToTerminal(response);
+          downloadLogs();
+          // Handle success response from the server (you can update the UI here)
+      },
+      error: function(error) {
+          console.error(error);
+          // Handle error response from the server
+      }
+  });
+
+
 }
 
 function registerCar() {
@@ -150,6 +181,8 @@ function registerCar() {
         contentType: false,
         success: function(response) {
             console.log(response);
+            addLogToTerminal(response);
+            downloadLogs();
             // Handle success response from the server
         },
         error: function(error) {
