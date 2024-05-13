@@ -279,7 +279,7 @@ function renderCards(cards) {
       cardsContainer.appendChild(card);
   });
 }
-fetchData();
+//fetchData();
 
 
   
