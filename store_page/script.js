@@ -725,7 +725,7 @@ function getID() {
 
 // Call the function when the page loads
 $(document).ready(function () {
-  getID(); 
+  //getID(); 
   checkLoginStatus();
   
 	// Initial render when the page loads
