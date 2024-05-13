@@ -166,15 +166,24 @@ const cardData_2 = [
 var cardData=[];
 
 function fetchData() {
-// Make an AJAX request to fetchData.php
-fetch('fetchData.php')
-	.then(response => response.json())
-	.then(fetchedData => {
-	  cardData = fetchedData
-	  console.log(cardData);
-	  renderCards(fetchedData); // Update the global variable with the fetched data
-	})
+    fetch('fetchData.php')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(fetchedData => {
+            cardData = fetchedData;
+            console.log(cardData);
+            renderCards(fetchedData); // Update the global variable with the fetched data
+        })
+        .catch(error => {
+            console.error('Error fetching data:', error);
+            // Handle the error here (e.g., display an error message to the user)
+        });
 }
+
 
 var reserves=[];
 
